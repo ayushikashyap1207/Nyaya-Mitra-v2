@@ -158,7 +158,7 @@ def process_document(pdf_file, language):
         return "<p style='color:red'>Please upload a PDF file.</p>", None, ""
 
     try:
-        text = safe_text(extract_text_from_pdf(pdf_file.name))
+        text = safe_text(extract_text_from_pdf(pdf_file))
     except ValueError as e:
         return f"<p style='color:red'>{str(e)}</p>", None, ""
 
@@ -244,7 +244,7 @@ with gr.Blocks(
             pdf_input = gr.File(
                 label="Upload Legal Document (PDF)",
                 file_types=[".pdf"],
-                type="filepath",
+                
             )
             language_input = gr.Dropdown(
                 choices=SUPPORTED_LANGUAGES,
@@ -273,7 +273,7 @@ with gr.Blocks(
 
     audio_output = gr.Audio(
         label="Listen to the summary",
-        type="filepath",
+        
         interactive=False,
     )
 
