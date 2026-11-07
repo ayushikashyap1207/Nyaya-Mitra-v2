@@ -18,8 +18,10 @@ OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434").rstrip("/"
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.1:8b")
 
 # Cloud provider used on Hugging Face Spaces (and anywhere Ollama is not
-# available). Set LLM_PROVIDER=groq and provide GROQ_API_KEY.
-LLM_PROVIDER = os.environ.get("LLM_PROVIDER", "ollama").strip().lower()
+# available). Spaces set SPACE_ID automatically, so choose Groq there unless
+# the user overrides it. Set GROQ_API_KEY in the Space secrets.
+_default_provider = "groq" if os.environ.get("SPACE_ID") else "ollama"
+LLM_PROVIDER = os.environ.get("LLM_PROVIDER", _default_provider).strip().lower()
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "").strip()
 GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"

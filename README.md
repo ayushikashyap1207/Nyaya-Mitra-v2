@@ -5,8 +5,11 @@ colorFrom: blue
 colorTo: green
 sdk: gradio
 sdk_version: 4.44.0
+python_version: '3.12'
 app_file: app.py
 pinned: false
+license: mit
+short_description: AI legal assistant for rural India
 ---
 
 # ⚖️ Nyaya Mitra v2 — AI Legal Assistant for Rural India
@@ -271,7 +274,7 @@ On a phone, browser microphone access requires a secure context — use the HTTP
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `LLM_PROVIDER` | `ollama` | `ollama` locally, `groq` on Hugging Face Spaces |
+| `LLM_PROVIDER` | `ollama` locally, `groq` on Spaces | `ollama` or `groq` |
 | `OLLAMA_HOST` | `http://localhost:11434` | Ollama server URL |
 | `OLLAMA_MODEL` | `llama3.1:8b` | Ollama model name (`llama3.2:3b` for a lighter test model) |
 | `GROQ_API_KEY` | unset | Groq API key when `LLM_PROVIDER=groq` |
