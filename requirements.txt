@@ -27,3 +27,8 @@ easyocr==1.7.2
 opencv-python-headless==4.10.0.84
 numpy==1.26.4
 ocrmac==1.0.1; sys_platform == "darwin"
+
+# Voice input/output
+faster-whisper==1.2.1
+av==12.3.0  # faster-whisper 1.2.1 is incompatible with av>=19 (metadata_errors)
+static-ffmpeg==3.0  # bundled ffmpeg/ffprobe for Gradio audio preprocessing

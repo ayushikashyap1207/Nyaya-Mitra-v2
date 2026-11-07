@@ -9,6 +9,15 @@ import gradio as gr
 
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
+# Gradio uses ffprobe/ffmpeg to preprocess uploaded audio. static-ffmpeg
+# bundles both binaries, so voice input works without a system ffmpeg install.
+try:
+    import static_ffmpeg
+
+    static_ffmpeg.add_paths()
+except Exception:
+    pass
+
 
 def safe_text(text) -> str:
     if text is None:
@@ -53,6 +62,7 @@ from audio_generator import (  # noqa: E402
     translate_batch,
 )
 from chat import SUGGESTED_QUESTIONS, answer_question  # noqa: E402
+from voice import speak_text, transcribe_audio  # noqa: E402
 
 
 URGENCY_EMOJI = {"HIGH": "🔴", "MEDIUM": "🟠", "LOW": "🟢"}
@@ -592,7 +602,7 @@ def process_document_safe(files, language, progress=gr.Progress()):
         )
 
 
-def chat_answer(question, history, document_state):
+def chat_answer(question, history, document_state, language="Hindi"):
     """Answer a follow-up question using the uploaded document + cited RAG."""
     question = safe_text(question).strip()
     history = list(history or [])
@@ -609,7 +619,7 @@ def chat_answer(question, history, document_state):
             analysis=state.get("analysis"),
             doc_type=state.get("doc_type"),
             history=history,
-            language=state.get("language", "English"),
+            language=language,
         )
         answer = result.get("answer") or (
             "I could not find a clear answer. Please ask a lawyer or your "
@@ -631,8 +641,70 @@ def chat_answer(question, history, document_state):
     return history + [(question, answer)], sources_html, ""
 
 
+def voice_ask(audio_path, history, document_state, language="Hindi"):
+    """Transcribe a spoken question, answer it, and speak the answer."""
+    history = list(history or [])
+
+    if not audio_path:
+        gr.Warning("Record a question first, then tap the button.")
+        return history, "", "", None
+
+    try:
+        question = transcribe_audio(audio_path, language)
+    except Exception as e:
+        logger.error("Voice transcription failed | %s", e)
+        gr.Warning(f"Could not understand the recording: {e}")
+        return history, "", "", None
+
+    new_history, sources_html, _cleared = chat_answer(
+        question, history, document_state, language
+    )
+
+    answer = ""
+    if new_history:
+        last = new_history[-1]
+        if isinstance(last, (list, tuple)) and len(last) > 1:
+            answer = last[1] or ""
+
+    audio_out = None
+    if answer and not answer.startswith("The local AI model is not available"):
+        try:
+            audio_out = speak_text(answer, language)
+        except Exception as e:
+            logger.warning("Voice answer generation failed | %s", e)
+            gr.Warning("The answer was generated, but the audio could not be created.")
+
+    return new_history, sources_html, question, audio_out
+
+
+def play_answer(history, language="Hindi"):
+    """Generate speech for the latest assistant message."""
+    history = list(history or [])
+    if not history:
+        gr.Warning("There is no answer to play yet.")
+        return None
+
+    last = history[-1]
+    answer = ""
+    if isinstance(last, (list, tuple)) and len(last) > 1:
+        answer = last[1] or ""
+    elif isinstance(last, dict):
+        answer = last.get("content", "") if last.get("role") == "assistant" else ""
+
+    if not answer:
+        gr.Warning("There is no answer to play yet.")
+        return None
+
+    try:
+        return speak_text(answer, language)
+    except Exception as e:
+        logger.warning("Play-answer generation failed | %s", e)
+        gr.Warning("Could not generate audio for this answer.")
+        return None
+
+
 def clear_chat():
-    return [], "", ""
+    return [], "", "", None
 
 
 CSS = """
@@ -1146,6 +1218,13 @@ with gr.Blocks(
                 """
             )
 
+            chat_language = gr.Dropdown(
+                choices=SUPPORTED_LANGUAGES,
+                value="Hindi",
+                label="Chat language",
+                info="Used for answers, speech recognition, and spoken replies.",
+            )
+
             chatbot = gr.Chatbot(
                 label="Nyaya Mitra",
                 height=360,
@@ -1165,11 +1244,47 @@ with gr.Blocks(
                 size="lg",
             )
 
-            sources_output = gr.HTML()
+            sources_output = gr.HTML(elem_id="nm-chat-sources")
 
             gr.Examples(
                 examples=SUGGESTED_QUESTIONS,
                 inputs=question_input,
+            )
+
+            gr.HTML(
+                '<div class="nm-chat-intro" style="margin-top:16px;">'
+                "🎙️ Ask by voice</div>"
+            )
+
+            voice_input = gr.Audio(
+                sources=["microphone", "upload"],
+                type="filepath",
+                label="Record or upload your question",
+                elem_id="nm-voice-input",
+            )
+
+            voice_btn = gr.Button(
+                "Transcribe and ask",
+                variant="secondary",
+                size="lg",
+            )
+
+            chat_audio = gr.Audio(
+                label="Spoken answer",
+                interactive=False,
+                elem_id="nm-chat-audio",
+            )
+
+            play_btn = gr.Button(
+                "Play last answer",
+                variant="secondary",
+                size="sm",
+            )
+
+            gr.HTML(
+                '<div class="nm-muted" style="font-size:12px; margin-top:6px;">'
+                "On a phone, microphone access needs the HTTPS Gradio link. "
+                "You can also upload a voice note.</div>"
             )
 
             clear_btn = gr.Button("Clear chat", variant="secondary", size="sm")
@@ -1190,25 +1305,37 @@ with gr.Blocks(
     ).then(
         fn=clear_chat,
         inputs=None,
-        outputs=[chatbot, sources_output, question_input],
+        outputs=[chatbot, sources_output, question_input, chat_audio],
     )
 
     ask_btn.click(
         fn=chat_answer,
-        inputs=[question_input, chatbot, document_state],
+        inputs=[question_input, chatbot, document_state, chat_language],
         outputs=[chatbot, sources_output, question_input],
     )
 
     question_input.submit(
         fn=chat_answer,
-        inputs=[question_input, chatbot, document_state],
+        inputs=[question_input, chatbot, document_state, chat_language],
         outputs=[chatbot, sources_output, question_input],
+    )
+
+    voice_btn.click(
+        fn=voice_ask,
+        inputs=[voice_input, chatbot, document_state, chat_language],
+        outputs=[chatbot, sources_output, question_input, chat_audio],
+    )
+
+    play_btn.click(
+        fn=play_answer,
+        inputs=[chatbot, chat_language],
+        outputs=[chat_audio],
     )
 
     clear_btn.click(
         fn=clear_chat,
         inputs=None,
-        outputs=[chatbot, sources_output, question_input],
+        outputs=[chatbot, sources_output, question_input, chat_audio],
     )
 
 

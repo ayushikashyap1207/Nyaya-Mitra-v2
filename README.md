@@ -22,6 +22,7 @@ The interface is mobile-first: it works comfortably on a phone browser.
 | 📅 Complete date list | The LLM is instructed to extract every hearing date, notice date, filing date, payment date, and relative deadline. A deterministic date scanner also lists every date-like string found in the raw text. |
 | 🔎 Cited legal sources | RAG results now return the source and section (for example `Indian Penal Code §302`). The analysis page and the Q&A tab show the exact legal sources used. |
 | 💬 Ask a question | A new chat tab answers follow-up questions using the uploaded document + cited legal database. Works with a document, or as a general legal question assistant. |
+| 🎙️ Voice input and spoken answers | Record or upload a question; Whisper transcribes it, the cited RAG answers it, and gTTS reads the answer aloud. A “Play last answer” button also works for typed questions. |
 | 🗂️ Case summary first | The summary is the first thing shown after the urgency banner, followed by a dedicated important-dates card. |
 | 📱 Mobile-friendly UI | Single-column layout, large tap targets, 16px inputs (no iOS zoom), stacked date cards, and a max-width that fits small screens. |
 | 🎧 Audio | gTTS reads the translated summary aloud. Regional-script text is preserved correctly. |
@@ -69,6 +70,7 @@ Nyaya-Mitra-v2/
 ├── analyser.py             # Ollama LLM call + Pydantic validation + retries
 ├── rag.py                  # ChromaDB bi-encoder retrieval + cross-encoder rerank
 ├── chat.py                 # Cited RAG Q&A over the document
+├── voice.py                # Whisper speech-to-text + gTTS spoken answers
 ├── build_chroma_index.py   # One-time legal corpus index builder
 ├── legal_corpus.json       # IPC/CrPC/Consumer Protection entries
 ├── chroma_db/              # Persisted vector index
@@ -92,6 +94,8 @@ Nyaya-Mitra-v2/
 | Legal context | ChromaDB + sentence-transformers + cross-encoder reranker |
 | Translation | deep-translator (Google Translate, free) |
 | Text-to-speech | gTTS |
+| Speech-to-text | faster-whisper (Whisper model, runs locally) |
+| Audio preprocessing | static-ffmpeg (bundled ffmpeg/ffprobe) |
 | Validation | Pydantic 2 |
 
 Total cost to run: **₹0** (local model + free services).
@@ -128,6 +132,10 @@ pip install -r requirements.txt
 
 > The first OCR request may take a few minutes while EasyOCR downloads its
 > models. They are cached in `~/.EasyOCR` and reused afterwards.
+>
+> The first voice request also downloads the Whisper model
+> (`small` by default, about 500 MB). Use `WHISPER_MODEL=tiny` or `base` for
+> a faster first run.
 
 ### 3. Install and start Ollama
 
@@ -183,6 +191,18 @@ After analysing a document, open the **Ask a question** tab. Example questions:
 
 You can also use the tab without uploading a document for general legal questions. Answers use the legal database and show the cited source sections underneath.
 
+### Voice
+
+In the same tab:
+
+1. Choose the **Chat language**.
+2. Tap the microphone and record your question, or upload a voice note.
+3. Tap **Transcribe and ask**.
+4. The question is transcribed, answered with cited RAG, and the answer is spoken aloud.
+5. For typed questions, use **Play last answer** to hear the latest response.
+
+On a phone, browser microphone access requires a secure context — use the HTTPS Gradio share link. The same-Wi-Fi `http://<LAN-IP>:7860` address may block the microphone, so upload a voice note there instead.
+
 ---
 
 ## 📋 Supported inputs and document types
@@ -200,9 +220,12 @@ You can also use the tab without uploading a document for general legal question
 | Variable | Default | Purpose |
 |---|---|---|
 | `OLLAMA_HOST` | `http://localhost:11434` | Ollama server URL |
-| `OLLAMA_MODEL` | `llama3.1:8b` | Model name |
+| `OLLAMA_MODEL` | `llama3.1:8b` | Model name (`llama3.2:3b` for a lighter test model) |
 | `OCR_LANGUAGES` | `eng+hin` | Default OCR language string used outside the UI |
 | `TESSERACT_CMD` | auto-detected | Path to the tesseract binary |
+| `WHISPER_MODEL` | `small` | Whisper model size (`tiny`, `base`, `small`, `medium`, `large-v3`) |
+| `WHISPER_DEVICE` | `cpu` | faster-whisper device |
+| `WHISPER_COMPUTE_TYPE` | `int8` | faster-whisper compute type |
 | `PORT` | `7860` | Gradio port |
 | `GRADIO_SHARE` | `1` | Set to `0` to disable the public share link |
 
@@ -215,7 +238,9 @@ You can also use the tab without uploading a document for general legal question
 - Tamil OCR currently needs Tesseract: EasyOCR's bundled Tamil model has a checkpoint compatibility issue on some installs.
 - The analysis prompt currently uses the first ~12,000 characters of the extracted text.
 - Chat answers use the same local model and the current legal corpus; a larger corpus will improve them.
-- The chat is text-only for now; voice input/output is the next planned feature.
+- Voice input needs a microphone; on phones this requires the HTTPS Gradio share link, or upload a voice note.
+- Whisper accuracy drops with background noise, strong accents, or very quiet recordings.
+- The first voice request downloads the Whisper model (`small` is about 500 MB).
 - Local Llama 3.1 8B inference can be slow on CPU, especially the first request.
 - gTTS and Google Translate require an internet connection.
 - Tamil/Telugu TTS quality is good but not perfect for complex legal terms.
