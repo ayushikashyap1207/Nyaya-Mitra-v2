@@ -1,5 +1,5 @@
 ---
-title: Nyaya Mitra
+title: Nyaya Mitra — AI Legal Assistant
 emoji: ⚖️
 colorFrom: blue
 colorTo: green
@@ -9,21 +9,41 @@ python_version: '3.12'
 app_file: app.py
 pinned: false
 license: mit
-short_description: AI legal assistant for rural India
+short_description: Understand any Indian legal document in minutes
 ---
 
-# ⚖️ Nyaya Mitra v2 — AI Legal Assistant for Rural India
+<p align="center">
+  <img src="docs/screenshots/analysis-hero.png" width="300" alt="Nyaya Mitra Hindi case summary and important dates" />
+</p>
 
-> **"Every Indian citizen deserves to understand the legal document in their hand."**
+<h1 align="center">⚖️ Nyaya Mitra v2</h1>
 
-Nyaya Mitra is a free AI legal-document assistant built for rural Indian citizens. Upload a court summons, FIR, rent agreement, property document, or legal notice — as a **PDF or phone photos of the scanned pages** — and get:
+<p align="center">
+  <strong>Understand any Indian legal document in minutes.</strong><br/>
+  Upload a court summons, FIR, rent agreement, property document, or legal notice
+  as a PDF or phone photos. Get a plain-language case summary, every important
+  date, cited legal sources, and a spoken answer in Hindi, Marathi, Tamil, or Telugu.
+</p>
 
-- a plain-language **case summary**,
-- **every important date and deadline** found in the document,
-- urgency, legal rights, consequences, and next steps,
-- an **audio summary** in Hindi, Marathi, Tamil, or Telugu.
+<p align="center">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white" />
+  <img alt="Gradio" src="https://img.shields.io/badge/Gradio-4.44-FF7C00" />
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-green" />
+  <img alt="Tests" src="https://img.shields.io/badge/Tests-23%20passing-brightgreen" />
+  <img alt="Retrieval Hit@3" src="https://img.shields.io/badge/Retrieval%20Hit%403-100%25-blue" />
+  <img alt="Languages" src="https://img.shields.io/badge/Languages-EN%20%7C%20HI%20%7C%20TA%20%7C%20TE-purple" />
+  <img alt="Hugging Face ready" src="https://img.shields.io/badge/%F0%9F%A4%97-Hugging%20Face%20ready-yellow" />
+</p>
 
-The interface is mobile-first: it works comfortably on a phone browser.
+<p align="center">
+  <sub>216 legal entries · 23 passing tests · 100% retrieval Hit@3 · mobile-first · cited answers</sub>
+</p>
+
+## 📸 Demo
+
+<p align="center">
+  <img src="docs/screenshots/chat-hindi.png" width="320" alt="Cited Hindi Q&A in Nyaya Mitra" />
+</p>
 
 **Current status:** 216 legal-corpus entries (including a BNS/BNSS/BSA starter set), multilingual hybrid RAG, cited Q&A, voice input/output, 23 passing tests, and an evaluation harness with published metrics.
 
