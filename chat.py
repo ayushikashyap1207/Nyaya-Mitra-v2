@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 from typing import Optional
 
-from analyser import call_llm, check_ollama_available
+from analyser import call_llm, check_llm_available
 from rag import format_hits_for_prompt, retrieve_legal_context
 
 logger = logging.getLogger("nyaya_mitra")
@@ -174,7 +174,7 @@ def answer_question(
     )
 
     logger.info("Chat question | doc_type=%s | hits=%d | chars=%d", doc_type, len(hits), len(prompt))
-    check_ollama_available()
+    check_llm_available()
     answer = call_llm(prompt, json_mode=False, max_tokens=900, temperature=0.2).strip()
 
     if not answer:

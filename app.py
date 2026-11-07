@@ -506,8 +506,8 @@ def process_document(files, language, progress=None):
         logger.error("Analysis setup failed | %s", e)
         return (
             error_panel(
-                "The local AI model is not available right now. Start Ollama "
-                "(and make sure the llama3.1:8b model is pulled), then try again."
+                "The AI model is not available right now. Check the Ollama "
+                "server or the configured API key/provider, then try again."
             ),
             None,
             None,
@@ -614,8 +614,8 @@ def chat_answer(question, history, document_state, language="Hindi"):
     except ValueError as e:
         logger.error("Chat model unavailable | %s", e)
         answer = (
-            "The local AI model is not available right now. Start Ollama and "
-            "make sure the model is pulled, then try again."
+            "The AI model is not available right now. Check the Ollama server "
+            "or the configured API key/provider, then try again."
         )
         sources_html = ""
     except Exception:
@@ -652,7 +652,7 @@ def voice_ask(audio_path, history, document_state, language="Hindi"):
             answer = last[1] or ""
 
     audio_out = None
-    if answer and not answer.startswith("The local AI model is not available"):
+    if answer and not answer.startswith("The AI model is not available"):
         try:
             audio_out = speak_text(answer, language)
         except Exception as e:
@@ -1324,9 +1324,26 @@ with gr.Blocks(
     )
 
 
+def ensure_legal_index() -> None:
+    """Build the Chroma index on first run (needed on Hugging Face Spaces)."""
+    try:
+        from rag import corpus_size
+
+        if corpus_size() > 0:
+            return
+
+        logger.info("Legal index missing; building it from legal_corpus.json…")
+        from build_chroma_index import main as build_index
+
+        build_index()
+    except Exception as e:
+        logger.warning("Could not build the legal index at startup: %s", e)
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", "7860"))
-    share = os.environ.get("GRADIO_SHARE", "1") != "0"
+    share = os.environ.get("GRADIO_SHARE", "0") == "1"
+    ensure_legal_index()
     app.queue().launch(
         server_name="0.0.0.0",
         server_port=port,

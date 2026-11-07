@@ -1,3 +1,14 @@
+---
+title: Nyaya Mitra
+emoji: ⚖️
+colorFrom: blue
+colorTo: green
+sdk: gradio
+sdk_version: 4.44.0
+app_file: app.py
+pinned: false
+---
+
 # ⚖️ Nyaya Mitra v2 — AI Legal Assistant for Rural India
 
 > **"Every Indian citizen deserves to understand the legal document in their hand."**
@@ -77,6 +88,8 @@ Nyaya-Mitra-v2/
 ├── chroma_db/              # Persisted vector index
 ├── audio_generator.py      # Translation, script building, gTTS MP3
 ├── requirements.txt
+├── requirements-ocr-fallback.txt
+├── packages.txt            # Hugging Face Spaces system packages
 └── README.md
 ```
 
@@ -91,7 +104,7 @@ Nyaya-Mitra-v2/
 | OCR | Tesseract → macOS Vision → EasyOCR fallback chain |
 | PDF rendering | PyMuPDF (no Poppler required) |
 | Document classification | Regex keyword scoring |
-| Legal analysis | Local Llama 3.1 8B via Ollama |
+| Legal analysis | Ollama locally (Llama 3.1/3.2), Groq on Hugging Face Spaces |
 | Legal context | ChromaDB + sentence-transformers + cross-encoder reranker |
 | Localization | Local LLM field-by-field translation (no external API) |
 | Text-to-speech | gTTS |
@@ -107,9 +120,9 @@ Total cost to run: **₹0** (local model + free services).
 
 ### 1. Install system OCR dependencies (optional but recommended)
 
-The app works without these because EasyOCR and macOS Vision are included
-through pip, but Tesseract gives the best multilingual results, especially
-for Tamil.
+Tesseract gives the best multilingual results, especially for Tamil. If it
+is not installed, the app falls back to macOS Vision (English) and then
+EasyOCR if you install the optional fallback.
 
 macOS:
 ```bash
@@ -129,6 +142,9 @@ cd Nyaya-Mitra-v2
 python3 -m venv .venv
 source .venv/bin/activate       # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+
+# Optional: multilingual OCR fallback when Tesseract is not installed
+pip install -r requirements-ocr-fallback.txt
 ```
 
 > The first OCR request may take a few minutes while EasyOCR downloads its
@@ -171,10 +187,45 @@ Open **http://localhost:7860**.
 
 ---
 
+## ☁️ Deploy to Hugging Face Spaces
+
+A free CPU Space cannot run Ollama, so the Space uses Groq for the LLM. The
+README front matter above is already configured for the Gradio SDK.
+
+1. Create a Space at [huggingface.co/new-space](https://huggingface.co/new-space):
+   - SDK: **Gradio**
+   - Hardware: **CPU basic**
+2. Push this project to the Space repository, keeping:
+   - `README.md` (with its YAML front matter)
+   - `app.py`
+   - `requirements.txt`
+   - `packages.txt`
+   - all Python modules, `legal_corpus.json`, and `build_chroma_index.py`
+3. In **Settings → Variables and secrets**, add:
+   - `LLM_PROVIDER=groq`
+   - `GROQ_API_KEY=your_key_from_console.groq.com`
+   - `GROQ_MODEL=llama-3.1-8b-instant`
+   - optional `WHISPER_MODEL=tiny` for a faster demo, or `small` for quality
+4. `packages.txt` installs Tesseract (English, Hindi, Marathi, Tamil, Telugu),
+   Poppler, and FFmpeg automatically.
+5. The first startup builds the Chroma legal index automatically. This can
+   take a minute or two; watch the Space logs.
+
+Notes:
+
+- `ocrmac` is macOS-only, so on the Space the OCR path uses Tesseract and
+  EasyOCR instead.
+- Free CPU is slower than a local machine; the first voice request also
+  downloads the Whisper model.
+- For the full local-Ollama version, deploy a Docker container on a VM,
+  Render, Railway, or Fly.io instead.
+
+---
+
 ## 📱 Opening it on a phone
 
 - **Same Wi-Fi:** run the app, then open `http://<your-computer-LAN-IP>:7860` on the phone. The server listens on `0.0.0.0` so LAN access works.
-- **Anywhere:** by default `share=True` creates a temporary public Gradio link. Use it on mobile data. Disable with `GRADIO_SHARE=0 python app.py`.
+- **Anywhere:** enable the temporary public Gradio link with `GRADIO_SHARE=1 python app.py`.
 - **Custom port:** `PORT=8080 python app.py`.
 
 On a phone, tap the upload box and choose **Camera** to photograph each page, or select existing photos from the gallery. Upload pages in order.
@@ -220,15 +271,18 @@ On a phone, browser microphone access requires a secure context — use the HTTP
 
 | Variable | Default | Purpose |
 |---|---|---|
+| `LLM_PROVIDER` | `ollama` | `ollama` locally, `groq` on Hugging Face Spaces |
 | `OLLAMA_HOST` | `http://localhost:11434` | Ollama server URL |
-| `OLLAMA_MODEL` | `llama3.1:8b` | Model name (`llama3.2:3b` for a lighter test model) |
+| `OLLAMA_MODEL` | `llama3.1:8b` | Ollama model name (`llama3.2:3b` for a lighter test model) |
+| `GROQ_API_KEY` | unset | Groq API key when `LLM_PROVIDER=groq` |
+| `GROQ_MODEL` | `llama-3.1-8b-instant` | Groq model name |
 | `OCR_LANGUAGES` | `eng+hin` | Default OCR language string used outside the UI |
 | `TESSERACT_CMD` | auto-detected | Path to the tesseract binary |
 | `WHISPER_MODEL` | `small` | Whisper model size (`tiny`, `base`, `small`, `medium`, `large-v3`) |
 | `WHISPER_DEVICE` | `cpu` | faster-whisper device |
 | `WHISPER_COMPUTE_TYPE` | `int8` | faster-whisper compute type |
 | `PORT` | `7860` | Gradio port |
-| `GRADIO_SHARE` | `1` | Set to `0` to disable the public share link |
+| `GRADIO_SHARE` | `0` | Set to `1` to enable the public Gradio share link |
 
 ---
 

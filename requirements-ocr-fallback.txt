@@ -1,0 +1,6 @@
+# Optional EasyOCR fallback for machines without Tesseract.
+# Hugging Face Spaces installs Tesseract via packages.txt, so this file is
+# not needed there.
+easyocr==1.7.2
+opencv-python-headless==4.10.0.84
+torchvision==0.17.0

@@ -17,6 +17,14 @@ MAX_RETRIES = 2
 OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434").rstrip("/")
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.1:8b")
 
+# Cloud provider used on Hugging Face Spaces (and anywhere Ollama is not
+# available). Set LLM_PROVIDER=groq and provide GROQ_API_KEY.
+LLM_PROVIDER = os.environ.get("LLM_PROVIDER", "ollama").strip().lower()
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "").strip()
+GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
+GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
+GROQ_TIMEOUT_SECONDS = 120
+
 # Local inference (especially on CPU, or a first cold-start request) can be
 # noticeably slower than a cloud API — give it real headroom rather than
 # timing out mid-generation.
@@ -53,12 +61,26 @@ def clean_prompt_text(text: str) -> str:
     return "".join(ch for ch in text if ch in "\n\t" or ord(ch) >= 32)
 
 
-def check_ollama_available() -> None:
+def check_llm_available() -> None:
     """
-    Verify Ollama is reachable and the configured model is actually pulled,
-    with clear, actionable error messages if not — since a raw connection
-    error here isn't obvious to someone new to running local models.
+    Verify the configured LLM provider is usable.
+
+    For Groq this means the API key is present. For Ollama it checks that
+    the server is reachable and the configured model is actually pulled.
     """
+    if LLM_PROVIDER == "groq":
+        if not GROQ_API_KEY:
+            raise ValueError(
+                "GROQ_API_KEY is not set. Add it as a Hugging Face Space secret "
+                "or a local environment variable, then restart the app."
+            )
+        return
+
+    if LLM_PROVIDER != "ollama":
+        raise ValueError(
+            f"Unknown LLM_PROVIDER '{LLM_PROVIDER}'. Use 'ollama' or 'groq'."
+        )
+
     try:
         resp = httpx.get(f"{OLLAMA_HOST}/api/tags", timeout=5)
         resp.raise_for_status()
@@ -223,19 +245,13 @@ def fallback_analysis(error: str = "") -> DocumentAnalysis:
     )
 
 
-def call_llm(
+def _call_ollama(
     prompt: str,
-    json_mode: bool = True,
-    max_tokens: int = 3000,
-    temperature: float = 0.1,
-    system_prompt: str | None = None,
+    json_mode: bool,
+    max_tokens: int,
+    temperature: float,
+    system_prompt: str | None,
 ) -> str:
-    """
-    Call the local Ollama server.
-
-    json_mode=True constrains generation to valid JSON syntax for the
-    structured analysis. Chat answers use json_mode=False for normal prose.
-    """
     messages = []
     if system_prompt:
         messages.append({"role": "system", "content": system_prompt})
@@ -271,6 +287,88 @@ def call_llm(
     data = response.json()
     content = data.get("message", {}).get("content", "")
     return safe_text(content.strip())
+
+
+def _call_groq(
+    prompt: str,
+    json_mode: bool,
+    max_tokens: int,
+    temperature: float,
+    system_prompt: str | None,
+) -> str:
+    if not GROQ_API_KEY:
+        raise ValueError(
+            "GROQ_API_KEY is not set. Add it as a Hugging Face Space secret "
+            "or a local environment variable."
+        )
+
+    messages = []
+    if system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+    messages.append({"role": "user", "content": prompt})
+
+    payload = {
+        "model": GROQ_MODEL,
+        "messages": messages,
+        "temperature": temperature,
+        "max_tokens": max_tokens,
+    }
+    if json_mode:
+        payload["response_format"] = {"type": "json_object"}
+
+    try:
+        response = httpx.post(
+            GROQ_API_URL,
+            headers={
+                "Authorization": f"Bearer {GROQ_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            json=payload,
+            timeout=GROQ_TIMEOUT_SECONDS,
+        )
+        response.raise_for_status()
+    except httpx.TimeoutException:
+        raise RuntimeError(
+            f"Groq did not respond within {GROQ_TIMEOUT_SECONDS}s. "
+            "Please try again."
+        ) from None
+    except httpx.HTTPStatusError as e:
+        detail = e.response.text[:400]
+        raise RuntimeError(
+            f"Groq API error {e.response.status_code}: {detail}"
+        ) from e
+    except httpx.RequestError as e:
+        raise RuntimeError(f"Could not reach the Groq API: {e}") from e
+
+    data = response.json()
+    content = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+    return safe_text(content.strip())
+
+
+def call_llm(
+    prompt: str,
+    json_mode: bool = True,
+    max_tokens: int = 3000,
+    temperature: float = 0.1,
+    system_prompt: str | None = None,
+) -> str:
+    """
+    Call the configured LLM provider.
+
+    json_mode=True constrains generation to valid JSON syntax for the
+    structured analysis. Chat answers use json_mode=False for normal prose.
+    """
+    if LLM_PROVIDER == "groq":
+        return _call_groq(
+            prompt, json_mode, max_tokens, temperature, system_prompt
+        )
+    if LLM_PROVIDER == "ollama":
+        return _call_ollama(
+            prompt, json_mode, max_tokens, temperature, system_prompt
+        )
+    raise ValueError(
+        f"Unknown LLM_PROVIDER '{LLM_PROVIDER}'. Use 'ollama' or 'groq'."
+    )
 
 
 def get_validated_analysis(prompt: str, max_retries: int = MAX_RETRIES) -> DocumentAnalysis:
@@ -469,7 +567,7 @@ def analyse_document(
     always well-formed, even in failure cases, so downstream rendering
     code never has to guard against missing keys.
     """
-    check_ollama_available()
+    check_llm_available()
 
     # More context = more dates found. 12k characters is roughly 5-8 typed
     # pages, or 3-4 OCR'd photo pages, which keeps local inference practical.

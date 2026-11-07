@@ -1,31 +1,22 @@
-# OCR notes:
-#   Tesseract is optional but recommended for the best multilingual OCR,
-#   especially Tamil. The app automatically falls back to macOS Vision
-#   (English) and EasyOCR (Hindi/Marathi/Telugu/English) when Tesseract
-#   is not installed.
-#   macOS: brew install tesseract tesseract-lang poppler
-#   Ubuntu/Debian: sudo apt install tesseract-ocr tesseract-ocr-hin poppler-utils
-
 gradio==4.44.0
 PyPDF2==3.0.1
 pytesseract==0.3.13
 pdf2image==1.17.0
 pymupdf==2.1
 pillow==10.4.0
-httpx==0.27.2  # also used in analyser.py to call the local Ollama server
+httpx==0.27.2  # Ollama / Groq HTTP calls
 sentence-transformers==2.7.0
 gTTS==2.5.1
 deep-translator==1.11.4
 torch==2.2.0
-torchvision==0.17.0
 transformers==4.41.0
-pydantic==2.7.4  # gradio==4.44.0 breaks with pydantic>=2.9 (see github.com/gradio-app/gradio/issues/10662); chromadb has no upper pin on pydantic, so a plain `pip install chromadb` can silently upgrade it and break gradio — keep this pin exact
-chromadb==1.5.9  # used in rag.py for persistent vector storage (Step 7)
+pydantic==2.7.4  # gradio==4.44.0 breaks with pydantic>=2.9; keep this pin exact
+chromadb==1.5.9  # used in rag.py for persistent vector storage
 
-# OCR fallbacks
-easyocr==1.7.2
-opencv-python-headless==4.10.0.84
-numpy==1.26.4
+# OCR fallback for macOS when Tesseract isn't installed.
+# Hugging Face Spaces installs Tesseract through packages.txt, so it does
+# not need these heavier packages. On a local machine run:
+#   pip install -r requirements-ocr-fallback.txt
 ocrmac==1.0.1; sys_platform == "darwin"
 
 # Voice input/output
