@@ -1,9 +1,5 @@
 
 
-<p align="center">
-  <img src="docs/screenshots/analysis-hero.png" width="300" alt="Nyaya Mitra Hindi case summary and important dates" />
-</p>
-
 <h1 align="center">⚖️ Nyaya Mitra v2</h1>
 
 <p align="center">
@@ -26,7 +22,9 @@
 <p align="center">
   <sub>216 legal entries · 23 passing tests · 100% retrieval Hit@3 · mobile-first · cited answers</sub>
 </p>
-
+<p align="center">
+  <img src="docs/screenshots/analysis-hero.png" width="300" alt="Nyaya Mitra Hindi case summary and important dates" />
+</p>
 ## 📸 Demo
 
 <p align="center">
