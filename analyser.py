@@ -6,7 +6,7 @@ from typing import List, Literal, Optional
 import httpx
 from pydantic import BaseModel, Field, ValidationError
 
-from rag import get_relevant_context
+from rag import format_hits_for_prompt, retrieve_legal_context
 
 logger = logging.getLogger("nyaya_mitra")
 
@@ -214,24 +214,31 @@ def fallback_analysis(error: str = "") -> DocumentAnalysis:
     )
 
 
-def _call_llm(prompt: str) -> str:
+def call_llm(
+    prompt: str,
+    json_mode: bool = True,
+    max_tokens: int = 3000,
+    temperature: float = 0.1,
+) -> str:
     """
-    Call the local Ollama server. Uses format="json" so Ollama constrains
-    generation to valid JSON syntax — this doesn't enforce our specific
-    schema (that's still validated separately via DocumentAnalysis), but
-    it substantially cuts down on malformed/truncated JSON compared to
-    free-form generation.
+    Call the local Ollama server.
+
+    json_mode=True constrains generation to valid JSON syntax for the
+    structured analysis. Chat answers use json_mode=False for normal prose.
     """
+    payload = {
+        "model": OLLAMA_MODEL,
+        "messages": [{"role": "user", "content": prompt}],
+        "stream": False,
+        "options": {"temperature": temperature, "num_predict": max_tokens},
+    }
+    if json_mode:
+        payload["format"] = "json"
+
     try:
         response = httpx.post(
             f"{OLLAMA_HOST}/api/chat",
-            json={
-                "model": OLLAMA_MODEL,
-                "messages": [{"role": "user", "content": prompt}],
-                "stream": False,
-                "format": "json",
-                "options": {"temperature": 0.1, "num_predict": 3000},
-            },
+            json=payload,
             timeout=OLLAMA_TIMEOUT_SECONDS,
         )
         response.raise_for_status()
@@ -240,9 +247,11 @@ def _call_llm(prompt: str) -> str:
             f"Ollama did not respond within {OLLAMA_TIMEOUT_SECONDS}s. "
             "Local inference can be slow on first run (model loading into memory) "
             "or on machines without much RAM/GPU — try again, or use a smaller model."
-        )
-    except httpx.ConnectError:
-        raise RuntimeError(f"Lost connection to Ollama at {OLLAMA_HOST} mid-request.")
+        ) from None
+    except httpx.RequestError as e:
+        raise RuntimeError(
+            f"Lost connection to Ollama at {OLLAMA_HOST} mid-request: {e}"
+        ) from e
 
     data = response.json()
     content = data.get("message", {}).get("content", "")
@@ -259,7 +268,7 @@ def get_validated_analysis(prompt: str, max_retries: int = MAX_RETRIES) -> Docum
 
     for attempt in range(max_retries + 1):
         try:
-            raw = _call_llm(prompt)
+            raw = call_llm(prompt, json_mode=True)
         except Exception as e:
             last_error = f"Ollama call failed: {e}"
             logger.warning("Analysis attempt %d failed | %s", attempt + 1, last_error)
@@ -337,10 +346,12 @@ def analyse_document(
         else "None detected by the automatic scanner."
     )
 
+    hits = []
     try:
-        legal_context = get_relevant_context(
-            f"{doc_label}\n{doc_text}", doc_type=doc_type
+        hits = retrieve_legal_context(
+            f"{doc_label}\n{doc_text}", k=3, doc_type=doc_type
         )
+        legal_context = format_hits_for_prompt(hits)
     except Exception as e:
         logger.warning("RAG context retrieval failed, proceeding without it: %s", e)
         legal_context = ""
@@ -353,8 +364,9 @@ def analyse_document(
     )
     prompt = clean_prompt_text(safe_text(prompt))
 
-    analysis = get_validated_analysis(prompt)
-    return analysis.model_dump()
+    result = get_validated_analysis(prompt).model_dump()
+    result["_sources"] = hits
+    return result
 
 
 def get_urgency_color(urgency: str) -> str:

@@ -20,6 +20,8 @@ The interface is mobile-first: it works comfortably on a phone browser.
 | 📷 Photo / scanned-page upload | Upload JPG, PNG, WEBP, TIFF, or BMP photos of pages. The app automatically uses Tesseract if installed, then macOS Vision for English, then EasyOCR for Hindi/Marathi/Telugu. Multiple files can be uploaded in page order. |
 | 📄 Mixed PDF support | PDFs with some typed pages and some scanned pages are handled page by page: text-layer pages are read normally, scan-like pages are OCR'd. PyMuPDF renders pages without needing Poppler. |
 | 📅 Complete date list | The LLM is instructed to extract every hearing date, notice date, filing date, payment date, and relative deadline. A deterministic date scanner also lists every date-like string found in the raw text. |
+| 🔎 Cited legal sources | RAG results now return the source and section (for example `Indian Penal Code §302`). The analysis page and the Q&A tab show the exact legal sources used. |
+| 💬 Ask a question | A new chat tab answers follow-up questions using the uploaded document + cited legal database. Works with a document, or as a general legal question assistant. |
 | 🗂️ Case summary first | The summary is the first thing shown after the urgency banner, followed by a dedicated important-dates card. |
 | 📱 Mobile-friendly UI | Single-column layout, large tap targets, 16px inputs (no iOS zoom), stacked date cards, and a max-width that fits small screens. |
 | 🎧 Audio | gTTS reads the translated summary aloud. Regional-script text is preserved correctly. |
@@ -49,6 +51,9 @@ analyser.py  →  local Llama 3.1 via Ollama
           │
           ▼
 app.py  →  translate → mobile-friendly HTML + gTTS audio
+          │
+          ▼
+chat.py  →  follow-up questions with cited RAG sources
 ```
 
 ---
@@ -63,6 +68,7 @@ Nyaya-Mitra-v2/
 ├── classifier.py           # Keyword-based document type detection
 ├── analyser.py             # Ollama LLM call + Pydantic validation + retries
 ├── rag.py                  # ChromaDB bi-encoder retrieval + cross-encoder rerank
+├── chat.py                 # Cited RAG Q&A over the document
 ├── build_chroma_index.py   # One-time legal corpus index builder
 ├── legal_corpus.json       # IPC/CrPC/Consumer Protection entries
 ├── chroma_db/              # Persisted vector index
@@ -166,6 +172,19 @@ On a phone, tap the upload box and choose **Camera** to photograph each page, or
 
 ---
 
+## 💬 Ask a question
+
+After analysing a document, open the **Ask a question** tab. Example questions:
+
+- “What happens if I miss the hearing?”
+- “What should I do next?”
+- “Can I get free legal aid?”
+- “Explain the most important date.”
+
+You can also use the tab without uploading a document for general legal questions. Answers use the legal database and show the cited source sections underneath.
+
+---
+
 ## 📋 Supported inputs and document types
 
 **Inputs:** PDF, PNG, JPG/JPEG, WEBP, TIFF, BMP — one file or many pages at once.
@@ -195,6 +214,8 @@ On a phone, tap the upload box and choose **Camera** to photograph each page, or
 - The first OCR request can be slow while EasyOCR downloads models.
 - Tamil OCR currently needs Tesseract: EasyOCR's bundled Tamil model has a checkpoint compatibility issue on some installs.
 - The analysis prompt currently uses the first ~12,000 characters of the extracted text.
+- Chat answers use the same local model and the current legal corpus; a larger corpus will improve them.
+- The chat is text-only for now; voice input/output is the next planned feature.
 - Local Llama 3.1 8B inference can be slow on CPU, especially the first request.
 - gTTS and Google Translate require an internet connection.
 - Tamil/Telugu TTS quality is good but not perfect for complex legal terms.

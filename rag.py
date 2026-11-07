@@ -14,7 +14,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CHROMA_PATH = os.path.join(HERE, "chroma_db")
 COLLECTION_NAME = "legal_corpus"
 
-ALL_DOC_TYPES = ["court_summons", "fir", "rent_agreement", "property_document", "legal_notice"]
+ALL_DOC_TYPES = [
+    "court_summons",
+    "fir",
+    "rent_agreement",
+    "property_document",
+    "legal_notice",
+]
 
 RERANK_MODEL_NAME = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 RERANK_CANDIDATES = 15  # how many bi-encoder hits to pull before reranking
@@ -58,14 +64,19 @@ def _get_collection():
 
     try:
         _collection = _client.get_collection(COLLECTION_NAME)
-        logger.info("Connected to ChromaDB collection '%s' | entries=%d", COLLECTION_NAME, _collection.count())
+        logger.info(
+            "Connected to ChromaDB collection '%s' | entries=%d",
+            COLLECTION_NAME,
+            _collection.count(),
+        )
     except Exception:
         if not _collection_missing_warned:
             logger.error(
                 "ChromaDB collection '%s' not found at %s — run "
                 "'python build_chroma_index.py' once to build it. "
                 "Proceeding without legal context in the meantime.",
-                COLLECTION_NAME, CHROMA_PATH,
+                COLLECTION_NAME,
+                CHROMA_PATH,
             )
             _collection_missing_warned = True
         return None
@@ -73,34 +84,82 @@ def _get_collection():
     return _collection
 
 
-def get_relevant_context(query: str, k: int = 3, doc_type: Optional[str] = None) -> str:
+def _doc_types_from_metadata(metadata: dict) -> list[str]:
+    doc_types = [
+        doc_type
+        for doc_type in ALL_DOC_TYPES
+        if metadata.get(f"doc_type_{doc_type}")
+    ]
+    if doc_types:
+        return doc_types
+
+    display = metadata.get("doc_types_display", "")
+    return [part.strip() for part in display.split(",") if part.strip()]
+
+
+def _citation(source: str, section: str) -> str:
+    if source and section:
+        return f"{source} §{section}"
+    return source or section or "Legal source"
+
+
+def _strip_citation_prefix(text: str, source: str, section: str) -> str:
+    """Remove the stored '[Source Section]' prefix before re-citing in prompts."""
+    if not text:
+        return ""
+    if text.startswith("["):
+        head, separator, tail = text.partition("]")
+        if separator and source and source.lower() in head.lower():
+            return tail.strip()
+    prefix = f"[{source} {section}]"
+    if text.startswith(prefix):
+        return text[len(prefix) :].strip()
+    return text
+
+
+def _build_hit(
+    doc_id: str,
+    text: str,
+    metadata: dict,
+    score: Optional[float] = None,
+) -> dict:
+    source = metadata.get("source", "")
+    section = metadata.get("section", "")
+    return {
+        "id": doc_id,
+        "text": _strip_citation_prefix(text, source, section),
+        "source": source,
+        "section": section,
+        "citation": _citation(source, section),
+        "doc_types": _doc_types_from_metadata(metadata),
+        "score": score,
+    }
+
+
+def retrieve_legal_context(
+    query: str,
+    k: int = 3,
+    doc_type: Optional[str] = None,
+) -> list[dict]:
     """
-    Return top-k relevant legal corpus snippets as a single string, for
-    injection into the LLM analysis prompt.
+    Return the top-k legal corpus entries as structured hits.
 
-    Retrieval happens in two passes:
+    Each hit contains:
+        id, text, source, section, citation, doc_types, score
+
+    Retrieval is a two-pass process:
       1. Bi-encoder similarity search in ChromaDB pulls RERANK_CANDIDATES
-         (default 15) candidates — fast but coarse.
-      2. A cross-encoder reranks those candidates by scoring (query,
-         candidate) pairs jointly, and the top-k by that score are
-         returned — slower but much better at judging true relevance.
-         Falls back to the bi-encoder's own ranking if the reranker fails
-         for any reason, so a reranker hiccup never blocks analysis.
-
-    Args:
-        query: the document text (or a summary of it) to search against.
-        k: number of snippets to return.
-        doc_type: optional classifier output (e.g. "fir", "rent_agreement").
-            When provided and recognised, retrieval is pre-filtered to only
-            entries tagged for that document type via a ChromaDB metadata
-            `where` clause before similarity ranking runs.
+         candidates.
+      2. A cross-encoder reranks those candidates using (query, candidate)
+         pairs, and the top-k are returned. If reranking fails, the
+         bi-encoder order is used.
     """
     if not query:
-        return ""
+        return []
 
     collection = _get_collection()
     if collection is None:
-        return ""
+        return []
 
     where = None
     if doc_type and doc_type in ALL_DOC_TYPES:
@@ -108,40 +167,98 @@ def get_relevant_context(query: str, k: int = 3, doc_type: Optional[str] = None)
 
     query_text = query[:2000]
 
-    # --- Pass 1: fast bi-encoder candidate retrieval ---
     try:
         model = _get_model()
-        query_embedding = model.encode([query_text], normalize_embeddings=True)[0].tolist()
+        query_embedding = model.encode(
+            [query_text], normalize_embeddings=True
+        )[0].tolist()
 
         n_candidates = min(RERANK_CANDIDATES, collection.count())
         results = collection.query(
             query_embeddings=[query_embedding],
             n_results=max(n_candidates, k),
             where=where,
+            include=["documents", "metadatas", "distances"],
         )
     except Exception as e:
-        logger.warning("ChromaDB query failed, proceeding without legal context | %s", e)
-        return ""
+        logger.warning(
+            "ChromaDB query failed, proceeding without legal context | %s", e
+        )
+        return []
 
-    documents = results.get("documents") or [[]]
-    candidates = documents[0] if documents else []
+    ids = (results.get("ids") or [[]])[0]
+    documents = (results.get("documents") or [[]])[0]
+    metadatas = (results.get("metadatas") or [[]])[0]
+
+    candidates = [
+        _build_hit(
+            doc_id=doc_id,
+            text=document or "",
+            metadata=metadata or {},
+        )
+        for doc_id, document, metadata in zip(ids, documents, metadatas)
+        if document
+    ]
 
     if not candidates:
-        return ""
+        return []
 
     # --- Pass 2: cross-encoder reranking of the candidate shortlist ---
     try:
         reranker = _get_reranker()
-        pairs = [[query_text, doc] for doc in candidates]
+        pairs = [[query_text, candidate["text"]] for candidate in candidates]
         scores = reranker.predict(pairs)
 
-        ranked = sorted(zip(candidates, scores), key=lambda pair: pair[1], reverse=True)
-        top_hits = [doc for doc, _score in ranked[:k]]
-    except Exception as e:
-        logger.warning("Cross-encoder reranking failed, falling back to bi-encoder ranking | %s", e)
-        top_hits = candidates[:k]
+        # predict() returns a numpy array for normal batches, but a bare
+        # scalar for a single pair. Normalise both cases before zipping.
+        if not hasattr(scores, "__len__"):
+            scores = [scores]
+        scores = list(scores)
+        if len(scores) != len(candidates):
+            raise ValueError(
+                f"reranker returned {len(scores)} scores for "
+                f"{len(candidates)} candidates"
+            )
 
-    return "\n".join(top_hits)
+        ranked = sorted(
+            zip(candidates, scores),
+            key=lambda pair: float(pair[1]),
+            reverse=True,
+        )
+        top_hits = []
+        for candidate, score in ranked[:k]:
+            hit = dict(candidate)
+            hit["score"] = round(float(score), 4)
+            top_hits.append(hit)
+        return top_hits
+    except Exception as e:
+        logger.warning(
+            "Cross-encoder reranking failed, falling back to bi-encoder order | %s",
+            e,
+        )
+        return candidates[:k]
+
+
+def format_hits_for_prompt(hits: list[dict]) -> str:
+    """Format structured hits as cited text for an LLM prompt."""
+    if not hits:
+        return ""
+
+    blocks = []
+    for hit in hits:
+        blocks.append(f"[{hit['citation']}]\n{hit['text']}")
+    return "\n\n".join(blocks)
+
+
+def get_relevant_context(
+    query: str,
+    k: int = 3,
+    doc_type: Optional[str] = None,
+) -> str:
+    """Backward-compatible helper that returns cited context as one string."""
+    return format_hits_for_prompt(
+        retrieve_legal_context(query, k=k, doc_type=doc_type)
+    )
 
 
 def corpus_size() -> int:

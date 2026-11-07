@@ -52,6 +52,7 @@ from audio_generator import (  # noqa: E402
     generate_audio,
     translate_batch,
 )
+from chat import SUGGESTED_QUESTIONS, answer_question  # noqa: E402
 
 
 URGENCY_EMOJI = {"HIGH": "🔴", "MEDIUM": "🟠", "LOW": "🟢"}
@@ -72,7 +73,11 @@ KEEP_AS_IS_KEYS = {"date", "name", "urgency_level"}
 
 # The audio script is built from the original English analysis, and the UI
 # uses the classifier label for the document type, so neither needs translating.
-SKIP_TRANSLATION_KEYS = KEEP_AS_IS_KEYS | {"audio_summary", "document_type"}
+SKIP_TRANSLATION_KEYS = KEEP_AS_IS_KEYS | {
+    "audio_summary",
+    "document_type",
+    "_sources",
+}
 
 EMPTY_RESULT_HTML = """
 <div class="nm-empty">
@@ -247,6 +252,35 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
 
         parts.append("</details>")
 
+    sources = analysis.get("_sources") or []
+    if sources:
+        parts.append(format_sources_html(sources))
+
+    return "".join(parts)
+
+
+def format_sources_html(hits) -> str:
+    """Render cited RAG hits below a chat answer."""
+    if not hits:
+        return ""
+
+    parts = [
+        '<div class="nm-card nm-sources">'
+        '<div class="nm-label">Sources used</div>'
+    ]
+    seen = set()
+    for hit in hits:
+        citation = hit.get("citation") or hit.get("source") or "Legal source"
+        if citation.lower() in seen:
+            continue
+        seen.add(citation.lower())
+        parts.append(
+            f'<div class="nm-source">'
+            f'<div class="nm-source-citation">{esc(citation)}</div>'
+            f'<div class="nm-source-text">{esc(hit.get("text", ""))}</div>'
+            f'</div>'
+        )
+    parts.append("</div>")
     return "".join(parts)
 
 
@@ -372,6 +406,7 @@ def process_document(files, language, progress=None):
         return (
             error_panel("Please upload a PDF or at least one photo of the pages."),
             None,
+            None,
         )
 
     # --- Stage 1: PDF / image extraction (blocking) -------------------------
@@ -399,6 +434,7 @@ def process_document(files, language, progress=None):
                 "EasyOCR with 'pip install easyocr'."
             ),
             None,
+            None,
         )
     except ValueError as e:
         logger.warning("Extraction failed | %s", e)
@@ -408,11 +444,13 @@ def process_document(files, language, progress=None):
                 "or a well-lit photo of the page, then try again."
             ),
             None,
+            None,
         )
     except Exception:
         logger.error("Unexpected extraction failure\n%s", traceback.format_exc())
         return (
             error_panel("We couldn't read this file. Please try again."),
+            None,
             None,
         )
 
@@ -425,6 +463,7 @@ def process_document(files, language, progress=None):
                 "The text looks unreadable. Please upload a clearer scan or photo, "
                 "or a text-based PDF."
             ),
+            None,
             None,
         )
 
@@ -464,6 +503,7 @@ def process_document(files, language, progress=None):
                 "(and make sure the llama3.1:8b model is pulled), then try again."
             ),
             None,
+            None,
         )
     except Exception:
         logger.error("Analysis failed\n%s", traceback.format_exc())
@@ -471,6 +511,7 @@ def process_document(files, language, progress=None):
             error_panel(
                 "We had trouble analysing this document. Please try again in a moment."
             ),
+            None,
             None,
         )
 
@@ -498,6 +539,7 @@ def process_document(files, language, progress=None):
                 "Please try again."
             ),
             None,
+            None,
         )
 
     # --- Stage 5: Audio generation (degrade gracefully) ---------------------
@@ -522,7 +564,14 @@ def process_document(files, language, progress=None):
 
     logger.info("Request complete | total_time=%.2fs", time.time() - request_start)
     report(1.0, "Done")
-    return html_output, audio_path
+    document_state = {
+        "text": text,
+        "analysis": analysis,
+        "doc_type": doc_type,
+        "doc_label": doc_label,
+        "language": language,
+    }
+    return html_output, audio_path, document_state
 
 
 def process_document_safe(files, language, progress=gr.Progress()):
@@ -539,7 +588,51 @@ def process_document_safe(files, language, progress=gr.Progress()):
                 "again, and if the problem continues, try a different file."
             ),
             None,
+            None,
         )
+
+
+def chat_answer(question, history, document_state):
+    """Answer a follow-up question using the uploaded document + cited RAG."""
+    question = safe_text(question).strip()
+    history = list(history or [])
+
+    if not question:
+        return history, "", ""
+
+    state = document_state or {}
+
+    try:
+        result = answer_question(
+            question,
+            document_text=state.get("text", ""),
+            analysis=state.get("analysis"),
+            doc_type=state.get("doc_type"),
+            history=history,
+            language=state.get("language", "English"),
+        )
+        answer = result.get("answer") or (
+            "I could not find a clear answer. Please ask a lawyer or your "
+            "nearest legal aid centre."
+        )
+        sources_html = format_sources_html(result.get("sources") or [])
+    except ValueError as e:
+        logger.error("Chat model unavailable | %s", e)
+        answer = (
+            "The local AI model is not available right now. Start Ollama and "
+            "make sure the model is pulled, then try again."
+        )
+        sources_html = ""
+    except Exception:
+        logger.error("Chat failed\n%s", traceback.format_exc())
+        answer = "Something went wrong while answering. Please try again."
+        sources_html = ""
+
+    return history + [(question, answer)], sources_html, ""
+
+
+def clear_chat():
+    return [], "", ""
 
 
 CSS = """
@@ -829,6 +922,46 @@ footer {
     font-size: 14px;
 }
 
+.nm-sources {
+    border-color: #c7d2fe;
+    background: #f8faff;
+}
+
+.nm-source {
+    border-top: 1px solid var(--nm-line);
+    padding: 10px 0;
+}
+
+.nm-source:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
+
+.nm-source-citation {
+    color: #3730a3;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.nm-source-text {
+    color: #4b5563;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 2px;
+}
+
+.nm-chat-intro {
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+#nm-chat {
+    min-height: 300px;
+}
+
 .nm-error {
     background: #fff5f5;
     border: 1px solid #fca5a5;
@@ -965,39 +1098,81 @@ with gr.Blocks(
         """
     )
 
-    docs_input = gr.File(
-        label="Legal document — PDF or photos of the pages",
-        file_types=SUPPORTED_UPLOAD_EXTENSIONS,
-        file_count="multiple",
-        type="filepath",
-        height=160,
-        elem_id="nm-file",
-    )
+    document_state = gr.State(value=None)
 
-    language_input = gr.Dropdown(
-        choices=SUPPORTED_LANGUAGES,
-        value="Hindi",
-        label="Document and audio language",
-        info="Choose the language printed on the document. The summary and audio will use it too.",
-    )
+    with gr.Tabs():
+        with gr.Tab("Analyse document"):
+            docs_input = gr.File(
+                label="Legal document — PDF or photos of the pages",
+                file_types=SUPPORTED_UPLOAD_EXTENSIONS,
+                file_count="multiple",
+                type="filepath",
+                height=160,
+                elem_id="nm-file",
+            )
 
-    submit_btn = gr.Button(
-        "Analyse document",
-        variant="primary",
-        size="lg",
-        elem_id="nm-analyse-btn",
-    )
+            language_input = gr.Dropdown(
+                choices=SUPPORTED_LANGUAGES,
+                value="Hindi",
+                label="Document and audio language",
+                info="Choose the language printed on the document. The summary and audio will use it too.",
+            )
 
-    analysis_output = gr.HTML(
-        value=EMPTY_RESULT_HTML,
-        elem_id="nm-results",
-    )
+            submit_btn = gr.Button(
+                "Analyse document",
+                variant="primary",
+                size="lg",
+                elem_id="nm-analyse-btn",
+            )
 
-    audio_output = gr.Audio(
-        label="Listen to the summary",
-        interactive=False,
-        elem_id="nm-audio",
-    )
+            analysis_output = gr.HTML(
+                value=EMPTY_RESULT_HTML,
+                elem_id="nm-results",
+            )
+
+            audio_output = gr.Audio(
+                label="Listen to the summary",
+                interactive=False,
+                elem_id="nm-audio",
+            )
+
+        with gr.Tab("Ask a question"):
+            gr.HTML(
+                """
+                <div class="nm-chat-intro">
+                  Ask about the uploaded document, or ask a general legal question.
+                  Answers use the document, the legal database, and cited sections.
+                </div>
+                """
+            )
+
+            chatbot = gr.Chatbot(
+                label="Nyaya Mitra",
+                height=360,
+                placeholder="Ask a question to get started.",
+                elem_id="nm-chat",
+            )
+
+            question_input = gr.Textbox(
+                label="Your question",
+                placeholder="For example: What happens if I miss the hearing?",
+                lines=2,
+            )
+
+            ask_btn = gr.Button(
+                "Ask",
+                variant="primary",
+                size="lg",
+            )
+
+            sources_output = gr.HTML()
+
+            gr.Examples(
+                examples=SUGGESTED_QUESTIONS,
+                inputs=question_input,
+            )
+
+            clear_btn = gr.Button("Clear chat", variant="secondary", size="sm")
 
     gr.HTML(
         """
@@ -1011,7 +1186,29 @@ with gr.Blocks(
     submit_btn.click(
         fn=process_document_safe,
         inputs=[docs_input, language_input],
-        outputs=[analysis_output, audio_output],
+        outputs=[analysis_output, audio_output, document_state],
+    ).then(
+        fn=clear_chat,
+        inputs=None,
+        outputs=[chatbot, sources_output, question_input],
+    )
+
+    ask_btn.click(
+        fn=chat_answer,
+        inputs=[question_input, chatbot, document_state],
+        outputs=[chatbot, sources_output, question_input],
+    )
+
+    question_input.submit(
+        fn=chat_answer,
+        inputs=[question_input, chatbot, document_state],
+        outputs=[chatbot, sources_output, question_input],
+    )
+
+    clear_btn.click(
+        fn=clear_chat,
+        inputs=None,
+        outputs=[chatbot, sources_output, question_input],
     )
 
 
