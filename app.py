@@ -58,8 +58,6 @@ from classifier import classify_document, get_document_label  # noqa: E402
 from analyser import analyse_document, get_urgency_color  # noqa: E402
 from audio_generator import (  # noqa: E402
     build_audio_script,
-    generate_audio,
-    translate_batch,
 )
 from chat import SUGGESTED_QUESTIONS, answer_question  # noqa: E402
 from voice import speak_text, transcribe_audio  # noqa: E402
@@ -80,14 +78,6 @@ OCR_LANGUAGE_BY_UI = {
 # These fields must not be translated: dates and names must stay exactly as
 # they appear in the document.
 KEEP_AS_IS_KEYS = {"date", "name", "urgency_level"}
-
-# The audio script is built from the original English analysis, and the UI
-# uses the classifier label for the document type, so neither needs translating.
-SKIP_TRANSLATION_KEYS = KEEP_AS_IS_KEYS | {
-    "audio_summary",
-    "document_type",
-    "_sources",
-}
 
 EMPTY_RESULT_HTML = """
 <div class="nm-empty">
@@ -296,16 +286,23 @@ def format_sources_html(hits) -> str:
 
 def translate_analysis(analysis: dict, language: str) -> dict:
     """
-    Translate all displayable fields in one or two batched requests. Dates and
-    names are left untouched, and any failed field falls back to English.
+    Legacy Google-Translate helper kept for compatibility.
+
+    The analysis pipeline no longer calls this; analyser.localize_analysis()
+    now writes the fields in the selected language directly.
     """
+    from audio_generator import translate_batch
+
+    if language == "English":
+        return analysis
+
     paths = []
     texts = []
 
     def collect(value, path):
         if isinstance(value, dict):
             for key, child in value.items():
-                if key in SKIP_TRANSLATION_KEYS:
+                if key in KEEP_AS_IS_KEYS or key in {"audio_summary", "document_type", "_sources"}:
                     continue
                 collect(child, path + [key])
         elif isinstance(value, list):
@@ -319,13 +316,13 @@ def translate_analysis(analysis: dict, language: str) -> dict:
     collect(analysis, [])
 
     if not texts:
-        return copy.deepcopy(analysis)
+        return analysis
 
     try:
         translated_values = translate_batch(texts, language)
     except Exception as e:
-        logger.warning("Batch translation failed, showing English | %s", e)
-        return copy.deepcopy(analysis)
+        logger.warning("Batch translation failed, showing original | %s", e)
+        return analysis
 
     translated = copy.deepcopy(analysis)
     for path, value in zip(paths, translated_values):
@@ -337,8 +334,6 @@ def translate_analysis(analysis: dict, language: str) -> dict:
                 target = target[key]
             target[path[-1]] = value
         except Exception:
-            # Structural mismatch should never happen, but never lose the
-            # whole result over one field.
             continue
 
     return translated
@@ -498,11 +493,13 @@ def process_document(files, language, progress=None):
             safe_text(doc_type),
             safe_text(doc_label),
             date_hints=all_dates,
+            language=language,
         )
         logger.info(
-            "LLM analysis | urgency=%s | dates=%d | time=%.2fs",
+            "LLM analysis | urgency=%s | dates=%d | language=%s | time=%.2fs",
             analysis.get("urgency_level", "MEDIUM"),
             len(analysis.get("critical_dates") or []),
+            language,
             time.time() - stage_start,
         )
     except ValueError as e:
@@ -525,22 +522,10 @@ def process_document(files, language, progress=None):
             None,
         )
 
-    # --- Stage 4: Translation (degrade gracefully) --------------------------
-    report(0.7, "Translating the summary…")
-    stage_start = time.time()
+    # --- Stage 4: Render the localized analysis -----------------------------
+    report(0.7, "Building the result…")
     try:
-        translated_analysis = translate_analysis(analysis, language)
-        logger.info(
-            "Translation complete | language=%s | time=%.2fs",
-            language,
-            time.time() - stage_start,
-        )
-    except Exception as e:
-        logger.warning("Translation stage failed entirely, showing English | %s", e)
-        translated_analysis = analysis
-
-    try:
-        html_output = format_analysis_html(translated_analysis, doc_label, all_dates)
+        html_output = format_analysis_html(analysis, doc_label, all_dates)
     except Exception:
         logger.error("HTML rendering failed\n%s", traceback.format_exc())
         return (
@@ -557,12 +542,12 @@ def process_document(files, language, progress=None):
     stage_start = time.time()
     audio_path = None
     try:
-        # Build the script from the original English analysis and let
-        # generate_audio translate it once, instead of translating twice.
+        # The analysis is already written in the selected language, so speak
+        # it directly instead of sending it through Google Translate again.
         audio_script = safe_text(
             build_audio_script(analysis, analysis.get("urgency_level", "MEDIUM"))
         )
-        audio_path = generate_audio(audio_script, language)
+        audio_path = speak_text(audio_script, language)
         logger.info(
             "Audio generation | language=%s | time=%.2fs",
             language,

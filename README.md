@@ -25,7 +25,8 @@ The interface is mobile-first: it works comfortably on a phone browser.
 | 🎙️ Voice input and spoken answers | Record or upload a question; Whisper transcribes it, the cited RAG answers it, and gTTS reads the answer aloud. A “Play last answer” button also works for typed questions. |
 | 🗂️ Case summary first | The summary is the first thing shown after the urgency banner, followed by a dedicated important-dates card. |
 | 📱 Mobile-friendly UI | Single-column layout, large tap targets, 16px inputs (no iOS zoom), stacked date cards, and a max-width that fits small screens. |
-| 🎧 Audio | gTTS reads the translated summary aloud. Regional-script text is preserved correctly. |
+| 🌐 Localized analysis | The LLM writes the summary, dates, urgency, rights, and audio script in the selected language. If a small model slips into English, a field-by-field local translation pass fixes it — no external translation API or rate limit. |
+| 🎧 Audio | gTTS reads the localized summary aloud. Regional-script text is preserved correctly. |
 
 ---
 
@@ -47,11 +48,11 @@ rag.py  →  relevant IPC/CrPC/Consumer Protection context from ChromaDB
           │
           ▼
 analyser.py  →  local Llama 3.1 via Ollama
-  Pydantic-validated JSON: summary, all critical dates, parties,
-  conditions, urgency, rights, next steps, audio script
+  Pydantic-validated JSON (in the selected language): summary,
+  all critical dates, parties, conditions, urgency, rights, next steps
           │
           ▼
-app.py  →  translate → mobile-friendly HTML + gTTS audio
+app.py  →  localized HTML + gTTS audio
           │
           ▼
 chat.py  →  follow-up questions with cited RAG sources
@@ -92,7 +93,7 @@ Nyaya-Mitra-v2/
 | Document classification | Regex keyword scoring |
 | Legal analysis | Local Llama 3.1 8B via Ollama |
 | Legal context | ChromaDB + sentence-transformers + cross-encoder reranker |
-| Translation | deep-translator (Google Translate, free) |
+| Localization | Local LLM field-by-field translation (no external API) |
 | Text-to-speech | gTTS |
 | Speech-to-text | faster-whisper (Whisper model, runs locally) |
 | Audio preprocessing | static-ffmpeg (bundled ffmpeg/ffprobe) |
@@ -242,7 +243,8 @@ On a phone, browser microphone access requires a secure context — use the HTTP
 - Whisper accuracy drops with background noise, strong accents, or very quiet recordings.
 - The first voice request downloads the Whisper model (`small` is about 500 MB).
 - Local Llama 3.1 8B inference can be slow on CPU, especially the first request.
-- gTTS and Google Translate require an internet connection.
+- gTTS requires an internet connection.
+- Very small local models may need the field-by-field localization fallback; 8B-quality models produce more polished regional-language text.
 - Tamil/Telugu TTS quality is good but not perfect for complex legal terms.
 - This is general legal information, **not legal advice**.
 

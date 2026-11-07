@@ -1,3 +1,4 @@
+import copy
 import os
 import json
 import logging
@@ -122,6 +123,8 @@ You will be given a legal document text and its type. Your job is to extract and
 
 Document Type: {doc_type}
 
+Target language for all explanations: {language}
+
 Relevant Legal Context:
 {legal_context}
 
@@ -130,6 +133,12 @@ Dates automatically detected in the document (use this as a checklist — includ
 
 Document Text:
 {doc_text}
+
+Rules for language:
+- Write simple_summary, key_conditions, what_happens_if_ignored, urgency_reason, your_rights, next_steps, audio_summary, party roles, and the label/importance of each date in {language}.
+- Keep JSON keys in English and keep urgency_level exactly HIGH, MEDIUM, or LOW.
+- Keep names, dates, case numbers, and section numbers exactly as written.
+- If the document text is in a different language, still explain everything in {language}.
 
 Rules for the case summary:
 - Write 3-5 short sentences covering: what this document/case is about, who is involved, what is being alleged or asked, and what the current situation is.
@@ -171,7 +180,7 @@ Respond ONLY with a valid JSON object in this exact format (no extra text, no ma
     "<step 2>",
     "<step 3>"
   ],
-  "audio_summary": "<A 4-6 sentence spoken summary in simple conversational Hindi-friendly English that will be translated and read aloud. Use simple words. Avoid legal jargon. Include the most important date, what to do, and what happens if ignored.>"
+  "audio_summary": "<A 4-6 sentence spoken summary in {language} that will be read aloud. Use simple words. Avoid legal jargon. Include the most important date, what to do, and what happens if ignored.>"
 }}"""
 
 
@@ -219,6 +228,7 @@ def call_llm(
     json_mode: bool = True,
     max_tokens: int = 3000,
     temperature: float = 0.1,
+    system_prompt: str | None = None,
 ) -> str:
     """
     Call the local Ollama server.
@@ -226,9 +236,14 @@ def call_llm(
     json_mode=True constrains generation to valid JSON syntax for the
     structured analysis. Chat answers use json_mode=False for normal prose.
     """
+    messages = []
+    if system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+    messages.append({"role": "user", "content": prompt})
+
     payload = {
         "model": OLLAMA_MODEL,
-        "messages": [{"role": "user", "content": prompt}],
+        "messages": messages,
         "stream": False,
         "options": {"temperature": temperature, "num_predict": max_tokens},
     }
@@ -319,11 +334,134 @@ def _retry_prompt(original_prompt: str, error: str) -> str:
     )
 
 
+_SCRIPT_RANGES = {
+    "Hindi": (0x0900, 0x097F),     # Devanagari
+    "Marathi": (0x0900, 0x097F),   # Devanagari
+    "Tamil": (0x0B80, 0x0BFF),
+    "Telugu": (0x0C00, 0x0C7F),
+}
+
+
+def _has_target_script(text: str, language: str) -> bool:
+    if not text:
+        return False
+    script_range = _SCRIPT_RANGES.get(language)
+    if not script_range:
+        return True
+    start, end = script_range
+    return any(start <= ord(char) <= end for char in text)
+
+
+def _analysis_needs_localization(analysis: dict, language: str) -> bool:
+    if language == "English" or language not in _SCRIPT_RANGES:
+        return False
+
+    summary = analysis.get("simple_summary", "")
+    audio_summary = analysis.get("audio_summary", "")
+    return not (
+        _has_target_script(summary, language)
+        and _has_target_script(audio_summary, language)
+    )
+
+
+def _translate_text_plain(text: str, language: str) -> str:
+    """Translate one field with a simple prose prompt (more reliable on 3B)."""
+    if not text or not str(text).strip():
+        return text
+
+    prompt = (
+        f"Translate the following legal text into {language}. "
+        f"Use the {language} native script. Return only the translation, "
+        "with no explanation, no English sentences, and no markdown.\n\n"
+        f"{text}"
+    )
+
+    for attempt in range(2):
+        try:
+            result = call_llm(
+                prompt,
+                json_mode=False,
+                max_tokens=500,
+                temperature=0.1,
+            )
+        except Exception as e:
+            logger.warning("Plain-text translation failed | %s", e)
+            return text
+
+        result = strip_markdown_fences(result).strip().strip('"').strip()
+        if result and _has_target_script(result, language):
+            return result
+
+        prompt += (
+            f"\n\nIMPORTANT: The previous answer was not in {language}. "
+            f"Translate into {language} using its native script only."
+        )
+
+    return text
+
+
+def localize_analysis(analysis: dict, language: str) -> dict:
+    """
+    Ensure the analysis values are in the target language.
+
+    Small local models often follow the JSON schema but ignore the
+    target-language instruction. When that happens, translate the fields
+    one by one with plain-prose prompts. This is slower than Google
+    Translate but has no external rate limit and keeps legal facts intact.
+    """
+    if not _analysis_needs_localization(analysis, language):
+        return analysis
+
+    result = copy.deepcopy(analysis)
+
+    for key in (
+        "simple_summary",
+        "what_happens_if_ignored",
+        "urgency_reason",
+        "audio_summary",
+    ):
+        result[key] = _translate_text_plain(result.get(key, ""), language)
+
+    for key in ("key_conditions", "your_rights", "next_steps"):
+        result[key] = [
+            _translate_text_plain(item, language) if isinstance(item, str) else item
+            for item in (result.get(key) or [])
+        ]
+
+    result["parties_involved"] = [
+        {
+            **person,
+            "role": _translate_text_plain(person.get("role", ""), language),
+        }
+        if isinstance(person, dict)
+        else person
+        for person in (result.get("parties_involved") or [])
+    ]
+
+    result["critical_dates"] = [
+        {
+            **item,
+            "label": _translate_text_plain(item.get("label", ""), language),
+            "importance": _translate_text_plain(
+                item.get("importance", ""), language
+            ),
+        }
+        if isinstance(item, dict)
+        else item
+        for item in (result.get("critical_dates") or [])
+    ]
+
+    result["_sources"] = analysis.get("_sources") or []
+    logger.info("Analysis localized field-by-field | language=%s", language)
+    return result
+
+
 def analyse_document(
     text: str,
     doc_type: str,
     doc_label: str,
     date_hints: Optional[List[str]] = None,
+    language: str = "English",
 ) -> dict:
     """
     Send document to a local Llama 3.1 model (via Ollama) for structured
@@ -358,6 +496,7 @@ def analyse_document(
 
     prompt = ANALYSIS_PROMPT.format(
         doc_type=doc_label,
+        language=language,
         legal_context=safe_text(legal_context),
         date_hints=date_hints_text,
         doc_text=doc_text,
@@ -366,6 +505,7 @@ def analyse_document(
 
     result = get_validated_analysis(prompt).model_dump()
     result["_sources"] = hits
+    result = localize_analysis(result, language)
     return result
 
 
