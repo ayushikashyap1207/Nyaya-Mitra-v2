@@ -627,7 +627,7 @@ def extract_text_from_uploads(paths, lang: str | None = None) -> str:
     parts = []
     ocr_error = None
     for index, path in enumerate(paths, start=1):
-        logger.info("Extracting upload %d/%d: %s", index, len(paths), path)
+        logger.info("Extracting upload %d/%d: %s", index, len(paths), os.path.basename(path))
         try:
             text = extract_text_from_upload(path, lang=lang)
         except OCRUnavailableError as e:

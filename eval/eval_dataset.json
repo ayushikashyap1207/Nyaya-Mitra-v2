@@ -1,0 +1,354 @@
+{
+  "documents": [
+    {
+      "id": "court_notice_en",
+      "doc_type": "court_summons",
+      "text": "IN THE COURT OF THE CIVIL JUDGE, DELHI\nCase No. 123/2024\nNotice issued on 12 January 2025.\nThe defendant must appear on 05/02/2025 at 10:30 AM.\nLast date to file reply: within 30 days of receipt.",
+      "expected_dates": [
+        "12 January 2025",
+        "05/02/2025",
+        "within 30 days"
+      ]
+    },
+    {
+      "id": "fir_en",
+      "doc_type": "fir",
+      "text": "FIRST INFORMATION REPORT\nPolice Station: Connaught Place, New Delhi\nFIR No. 45/2025\nDate of incident: 2 March 2025\nAccused arrested on 03/03/2025 and produced before the magistrate within 24 hours.\nSections: 302 and 307 of the Indian Penal Code.",
+      "expected_dates": [
+        "2 March 2025",
+        "03/03/2025",
+        "within 24 hours"
+      ]
+    },
+    {
+      "id": "rent_en",
+      "doc_type": "rent_agreement",
+      "text": "RENT AGREEMENT\nThis agreement is made on 1 April 2025 between the landlord and the tenant.\nMonthly rent is Rs. 15,000. Security deposit is Rs. 30,000.\nThe tenant must give 30 days notice before vacating.\nRent for May is due on 5th day of May 2025.",
+      "expected_dates": [
+        "1 April 2025",
+        "30 days",
+        "5th day of May 2025"
+      ]
+    },
+    {
+      "id": "property_en",
+      "doc_type": "property_document",
+      "text": "SALE DEED\nThis sale deed is executed on 15 May 2024 between the seller and the buyer.\nThe property is located at Plot No. 12, Sector 5.\nThe sale deed was registered with the Sub-Registrar on 20 May 2024.",
+      "expected_dates": [
+        "15 May 2024",
+        "20 May 2024"
+      ]
+    },
+    {
+      "id": "legal_notice_en",
+      "doc_type": "legal_notice",
+      "text": "LEGAL NOTICE\nNotice is hereby given on 10 June 2025 to the tenant to pay the outstanding rent.\nYou are required to reply within 15 days of receiving this notice.\nFailing which, legal proceedings will be initiated.",
+      "expected_dates": [
+        "10 June 2025",
+        "within 15 days"
+      ]
+    },
+    {
+      "id": "court_notice_hi",
+      "doc_type": null,
+      "text": "न्यायालय, दिल्ली\nनोटिस जारी की तारीख: 12 जनवरी 2025\nअगली सुनवाई: 05/02/2025\nजवाब देने की अंतिम तिथि: 30 दिनों के भीतर",
+      "expected_dates": [
+        "12 जनवरी 2025",
+        "05/02/2025"
+      ]
+    },
+    {
+      "id": "legal_notice_ta",
+      "doc_type": null,
+      "text": "சட்ட அறிவிப்பு\nதேதி: 12 ஜனவரி 2025\nபதில் அளிக்க 15 நாட்கள்",
+      "expected_dates": [
+        "12 ஜனவரி 2025"
+      ]
+    },
+    {
+      "id": "legal_notice_te",
+      "doc_type": null,
+      "text": "చట్టపరమైన నోటీసు\nతేదీ: 12 జనవరి 2025\nసమాధానం ఇవ్వడానికి 15 రోజులు",
+      "expected_dates": [
+        "12 జనవరి 2025"
+      ]
+    },
+    {
+      "id": "consumer_en",
+      "doc_type": null,
+      "text": "CONSUMER COMPLAINT\nThe complainant purchased a refrigerator on 5 July 2025.\nThe product developed a defect on 20 July 2025.\nA complaint was filed before the District Consumer Commission on 1 August 2025.",
+      "expected_dates": [
+        "5 July 2025",
+        "20 July 2025",
+        "1 August 2025"
+      ]
+    },
+    {
+      "id": "maintenance_en",
+      "doc_type": null,
+      "text": "APPLICATION FOR MAINTENANCE\nThe wife filed an application for maintenance on 8 August 2025.\nThe next hearing is on 20/09/2025.\nThe husband must file a reply within 15 days.",
+      "expected_dates": [
+        "8 August 2025",
+        "20/09/2025",
+        "within 15 days"
+      ]
+    }
+  ],
+  "retrieval_questions": [
+    {
+      "id": "q_murder",
+      "query": "What is the punishment for murder under Section 302 IPC?",
+      "doc_type": "fir",
+      "expected_ids": [
+        "ipc_302",
+        "bns_103_murder"
+      ]
+    },
+    {
+      "id": "q_eviction",
+      "query": "My landlord is trying to evict me without following the legal process.",
+      "doc_type": "rent_agreement",
+      "expected_ids": [
+        "mta_21",
+        "mta_28",
+        "practical_illegal_eviction"
+      ]
+    },
+    {
+      "id": "q_legal_aid",
+      "query": "Can I get free legal aid for a court case?",
+      "doc_type": null,
+      "expected_ids": [
+        "legal_services_act_12"
+      ]
+    },
+    {
+      "id": "q_fir",
+      "query": "How is an FIR registered at a police station?",
+      "doc_type": "fir",
+      "expected_ids": [
+        "crpc_154",
+        "bnss_173_fir"
+      ]
+    },
+    {
+      "id": "q_cheque",
+      "query": "What can I do if a cheque bounced due to insufficient funds?",
+      "doc_type": null,
+      "expected_ids": [
+        "ni_act_138"
+      ]
+    },
+    {
+      "id": "q_consumer",
+      "query": "How do I file a consumer complaint about a defective product?",
+      "doc_type": null,
+      "expected_ids": [
+        "cpa_35"
+      ]
+    },
+    {
+      "id": "q_maintenance",
+      "query": "Can a wife claim monthly maintenance from her husband?",
+      "doc_type": null,
+      "expected_ids": [
+        "crpc_125",
+        "bnss_144_maintenance"
+      ]
+    },
+    {
+      "id": "q_domestic_violence",
+      "query": "What protection order can a woman get against domestic violence?",
+      "doc_type": null,
+      "expected_ids": [
+        "dv_act_12",
+        "dv_act_18"
+      ]
+    },
+    {
+      "id": "q_electronic_evidence",
+      "query": "How can WhatsApp messages or CCTV footage be used as evidence?",
+      "doc_type": null,
+      "expected_ids": [
+        "evidence_act_65B",
+        "bsa_63_electronic_evidence"
+      ]
+    },
+    {
+      "id": "q_dowry_death",
+      "query": "What is dowry death under the Indian Penal Code?",
+      "doc_type": "fir",
+      "expected_ids": [
+        "ipc_304B",
+        "bns_80_dowry_death"
+      ]
+    },
+    {
+      "id": "q_anticipatory_bail",
+      "query": "How do I apply for anticipatory bail before arrest?",
+      "doc_type": "fir",
+      "expected_ids": [
+        "crpc_438",
+        "bnss_480_483_bail"
+      ]
+    },
+    {
+      "id": "q_nonappearance",
+      "query": "What happens if I do not appear in court after receiving a summons?",
+      "doc_type": "court_summons",
+      "expected_ids": [
+        "practical_court_nonappearance"
+      ]
+    },
+    {
+      "id": "q_property_verification",
+      "query": "How should I verify a property before buying it?",
+      "doc_type": "property_document",
+      "expected_ids": [
+        "practical_property_verification",
+        "practical_encumbrance_certificate"
+      ]
+    },
+    {
+      "id": "q_illegal_eviction",
+      "query": "My landlord locked me out and forcibly evicted me.",
+      "doc_type": "rent_agreement",
+      "expected_ids": [
+        "practical_illegal_eviction",
+        "mta_28"
+      ]
+    },
+    {
+      "id": "q_hindi_legal_aid",
+      "query": "क्या मुझे मुफ्त कानूनी सहायता मिल सकती है?",
+      "doc_type": null,
+      "expected_ids": [
+        "legal_services_act_12"
+      ]
+    },
+    {
+      "id": "q_hindi_fir",
+      "query": "एफआईआर कैसे दर्ज होती है?",
+      "doc_type": "fir",
+      "expected_ids": [
+        "crpc_154"
+      ]
+    },
+    {
+      "id": "q_tamil_eviction",
+      "query": "வீட்டு உரிமையாளர் என்னை சட்டத்திற்கு புறம்பாக வெளியேற்றுகிறார்.",
+      "doc_type": "rent_agreement",
+      "expected_ids": [
+        "mta_21",
+        "mta_28",
+        "practical_illegal_eviction"
+      ]
+    },
+    {
+      "id": "q_telugu_maintenance",
+      "query": "భార్యకు నెలవారీ భరణం ఎలా పొందాలి?",
+      "doc_type": null,
+      "expected_ids": [
+        "crpc_125",
+        "bnss_144_maintenance"
+      ]
+    },
+    {
+      "id": "q_bns_murder",
+      "query": "What is the punishment for murder under the Bharatiya Nyaya Sanhita?",
+      "doc_type": "fir",
+      "expected_ids": [
+        "bns_103_murder",
+        "ipc_302"
+      ]
+    },
+    {
+      "id": "q_bns_dowry_death",
+      "query": "What is dowry death under BNS?",
+      "doc_type": "fir",
+      "expected_ids": [
+        "bns_80_dowry_death",
+        "ipc_304B"
+      ]
+    },
+    {
+      "id": "q_bnss_fir",
+      "query": "How is an FIR registered under the BNSS?",
+      "doc_type": "fir",
+      "expected_ids": [
+        "bnss_173_fir",
+        "crpc_154"
+      ]
+    },
+    {
+      "id": "q_bsa_electronic",
+      "query": "How can electronic records be used as evidence under the BSA?",
+      "doc_type": null,
+      "expected_ids": [
+        "bsa_63_electronic_evidence",
+        "evidence_act_65B"
+      ]
+    },
+    {
+      "id": "q_bnss_maintenance",
+      "query": "What is the maintenance provision for a wife under BNSS?",
+      "doc_type": "court_summons",
+      "expected_ids": [
+        "bnss_144_maintenance",
+        "crpc_125"
+      ]
+    }
+  ],
+  "schema_cases": [
+    {
+      "name": "valid_full_analysis",
+      "should_validate": true,
+      "payload": {
+        "document_type": "Court Notice / Summons",
+        "simple_summary": "This is a court notice about a hearing.",
+        "parties_involved": [
+          {
+            "role": "Plaintiff",
+            "name": "Ramesh"
+          }
+        ],
+        "critical_dates": [
+          {
+            "label": "Next hearing",
+            "date": "05/02/2025",
+            "importance": "Appear."
+          }
+        ],
+        "key_conditions": [
+          "Bring the original notice."
+        ],
+        "what_happens_if_ignored": "The court may proceed ex parte.",
+        "urgency_level": "HIGH",
+        "urgency_reason": "The hearing is soon.",
+        "your_rights": [
+          "You have the right to legal aid."
+        ],
+        "next_steps": [
+          "Contact a lawyer."
+        ],
+        "audio_summary": "Please appear on 5 February 2025."
+      }
+    },
+    {
+      "name": "invalid_urgency",
+      "should_validate": false,
+      "payload": {
+        "simple_summary": "A notice.",
+        "urgency_level": "VERY HIGH"
+      }
+    },
+    {
+      "name": "invalid_date_type",
+      "should_validate": false,
+      "payload": {
+        "simple_summary": "A notice.",
+        "critical_dates": "05/02/2025"
+      }
+    }
+  ]
+}

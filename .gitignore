@@ -6,4 +6,5 @@ __pycache__
 .env
 *.log
 .ruff_cache/
+.pytest_cache/
 chroma_db/

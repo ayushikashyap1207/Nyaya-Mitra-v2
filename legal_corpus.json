@@ -2062,5 +2062,238 @@
       "property_document",
       "rent_agreement"
     ]
+  },
+  {
+    "id": "bns_103_murder",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "103(1)",
+    "text": "Punishment for murder. This replaces the old IPC Section 302.",
+    "plain_language": "This is the new murder punishment section. It corresponds to the old IPC Section 302. Starter mapping — verify with current law.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_105_culpable_homicide",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "105",
+    "text": "Punishment for culpable homicide not amounting to murder. Replaces IPC Section 304.",
+    "plain_language": "Used when a death was caused but does not meet the legal definition of murder. It corresponds to the old IPC Section 304.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_106_negligence",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "106",
+    "text": "Causing death by rash or negligent act. Replaces IPC Section 304A.",
+    "plain_language": "This is the typical charge in a fatal road accident where there was carelessness but no intention to kill. It corresponds to IPC Section 304A.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_109_attempt_murder",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "109",
+    "text": "Punishment for an attempt to murder. Replaces IPC Section 307.",
+    "plain_language": "Used when someone tried to kill another person but the victim survived. It corresponds to IPC Section 307.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_80_dowry_death",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "80",
+    "text": "Defines dowry death. Replaces IPC Section 304B.",
+    "plain_language": "If a married woman dies under suspicious circumstances within 7 years of marriage and dowry harassment is shown, this section applies. It corresponds to IPC Section 304B.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_108_abetment_suicide",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "108",
+    "text": "Punishment for abetment of suicide. Replaces IPC Section 306.",
+    "plain_language": "This applies when a person is accused of instigating or helping another person to die by suicide. It corresponds to IPC Section 306.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_115_hurt",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "115(2)",
+    "text": "Punishment for voluntarily causing hurt. Replaces IPC Section 323.",
+    "plain_language": "This covers simple hurt caused intentionally. It corresponds to the old IPC Section 323.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_117_grievous_hurt",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "117(2)-(3)",
+    "text": "Punishment for voluntarily causing hurt with a dangerous weapon or grievous hurt. Replaces IPC Sections 324 and 325.",
+    "plain_language": "This covers serious injuries or hurt caused with a dangerous weapon. It corresponds to old IPC Sections 324 and 325.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_74_assault_woman",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "74",
+    "text": "Assault or use of criminal force against a woman with intent to outrage her modesty. Replaces IPC Section 354.",
+    "plain_language": "This protects a woman from assault or criminal force used to outrage her modesty. It corresponds to IPC Section 354.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_64_rape",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "64",
+    "text": "Punishment for rape. Replaces IPC Sections 375 and 376.",
+    "plain_language": "This is the rape offence and punishment section. It corresponds to IPC Sections 375 and 376. Starter mapping; verify with current law.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_318_cheating",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "318(4)",
+    "text": "Punishment for cheating and dishonestly inducing delivery of property. Replaces IPC Section 420.",
+    "plain_language": "This is the cheating section used in many fraud cases. It corresponds to old IPC Section 420.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_316_criminal_breach_of_trust",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "316(2)",
+    "text": "Punishment for criminal breach of trust. Replaces IPC Section 406.",
+    "plain_language": "This applies when property entrusted to someone is dishonestly misappropriated. It corresponds to old IPC Section 406.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_85_cruelty",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "85",
+    "text": "Punishment for cruelty by a husband or his relatives. Replaces IPC Section 498A.",
+    "plain_language": "This is the cruelty-to-a-married-woman offence. It corresponds to old IPC Section 498A.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bns_351_criminal_intimidation",
+    "source": "Bharatiya Nyaya Sanhita, 2023",
+    "section": "351(2)",
+    "text": "Punishment for criminal intimidation. Replaces IPC Sections 503 and 506.",
+    "plain_language": "This applies when someone threatens another person with injury to force them to act or not act. It corresponds to old IPC Sections 503 and 506.",
+    "doc_types": [
+      "fir",
+      "court_summons",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "bnss_173_fir",
+    "source": "Bharatiya Nagarik Suraksha Sanhita, 2023",
+    "section": "173",
+    "text": "Procedure for registering a First Information Report (FIR). Replaces CrPC Section 154.",
+    "plain_language": "This is the new FIR registration section. It corresponds to old CrPC Section 154.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "bnss_35_arrest",
+    "source": "Bharatiya Nagarik Suraksha Sanhita, 2023",
+    "section": "35",
+    "text": "Rules for arrest without a warrant. Replaces CrPC Section 41.",
+    "plain_language": "This sets out when police can arrest someone without a warrant. It corresponds to old CrPC Section 41.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bnss_187_remand",
+    "source": "Bharatiya Nagarik Suraksha Sanhita, 2023",
+    "section": "187",
+    "text": "Procedure for remand and detention of an accused. Replaces CrPC Section 167.",
+    "plain_language": "This covers what happens after arrest when police need more time for investigation. It corresponds to old CrPC Section 167.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bnss_180_statements",
+    "source": "Bharatiya Nagarik Suraksha Sanhita, 2023",
+    "section": "180",
+    "text": "Recording of statements by police during investigation. Replaces CrPC Section 161.",
+    "plain_language": "This deals with statements made to police during investigation. It corresponds to old CrPC Section 161.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bnss_144_maintenance",
+    "source": "Bharatiya Nagarik Suraksha Sanhita, 2023",
+    "section": "144",
+    "text": "Maintenance for wife, children, and parents. Replaces CrPC Section 125.",
+    "plain_language": "This allows a wife, children, or parents who cannot maintain themselves to claim monthly maintenance. It corresponds to old CrPC Section 125.",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bnss_480_483_bail",
+    "source": "Bharatiya Nagarik Suraksha Sanhita, 2023",
+    "section": "480, 483",
+    "text": "Bail in bailable and non-bailable offences, and special bail powers. Replace CrPC Sections 437 and 439.",
+    "plain_language": "These are the main bail provisions in the new criminal procedure code. They correspond to old CrPC Sections 437 and 439.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "bsa_63_electronic_evidence",
+    "source": "Bharatiya Sakshya Adhiniyam, 2023",
+    "section": "63",
+    "text": "Conditions for admitting electronic records as evidence. Replaces the Indian Evidence Act Section 65B.",
+    "plain_language": "This sets conditions for using emails, WhatsApp messages, CCTV, or other electronic records as evidence. It corresponds to old Evidence Act Section 65B.",
+    "doc_types": [
+      "fir",
+      "court_summons",
+      "property_document",
+      "rent_agreement",
+      "legal_notice"
+    ]
   }
 ]

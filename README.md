@@ -35,6 +35,9 @@ The interface is mobile-first: it works comfortably on a phone browser.
 | 📄 Mixed PDF support | PDFs with some typed pages and some scanned pages are handled page by page: text-layer pages are read normally, scan-like pages are OCR'd. PyMuPDF renders pages without needing Poppler. |
 | 📅 Complete date list | The LLM is instructed to extract every hearing date, notice date, filing date, payment date, and relative deadline. A deterministic date scanner also lists every date-like string found in the raw text. |
 | 🔎 Cited legal sources | RAG results now return the source and section (for example `Indian Penal Code §302`). The analysis page and the Q&A tab show the exact legal sources used. |
+| 🧠 Hybrid multilingual RAG | Multilingual E5 embeddings + BM25 keyword search + a multilingual cross-encoder reranker, fused with reciprocal-rank fusion. Hindi, Tamil, and Telugu queries now retrieve the right sections. |
+| ⚖️ BNS / BNSS / BSA starter mapping | The legal corpus now includes 21 starter entries for the new Indian criminal codes, with old-to-new section notes. Clearly marked as needing legal review. |
+| 📊 Evaluation + CI | `eval/run_eval.py` measures date recall/precision, retrieval hit@1/hit@3/MRR, document classification, and schema validity. Pytest tests and a GitHub Actions workflow are included. |
 | 💬 Ask a question | A new chat tab answers follow-up questions using the uploaded document + cited legal database. Works with a document, or as a general legal question assistant. |
 | 🎙️ Voice input and spoken answers | Record or upload a question; Whisper transcribes it, the cited RAG answers it, and gTTS reads the answer aloud. A “Play last answer” button also works for typed questions. |
 | 🗂️ Case summary first | The summary is the first thing shown after the urgency banner, followed by a dedicated important-dates card. |
@@ -58,7 +61,8 @@ pdf_extractor.py
 classifier.py  →  document type (summons, FIR, rent, property, notice)
           │
           ▼
-rag.py  →  relevant IPC/CrPC/Consumer Protection context from ChromaDB
+rag.py  →  multilingual hybrid retrieval (ChromaDB + BM25 + reranker)
+           with BNS/BNSS/BSA + IPC/CrPC/Consumer Protection sources
           │
           ▼
 analyser.py  →  local Llama 3.1 via Ollama
@@ -83,14 +87,18 @@ Nyaya-Mitra-v2/
 ├── date_extractor.py       # Deterministic date/deadline scanner
 ├── classifier.py           # Keyword-based document type detection
 ├── analyser.py             # Ollama LLM call + Pydantic validation + retries
-├── rag.py                  # ChromaDB bi-encoder retrieval + cross-encoder rerank
+├── rag.py                  # Multilingual E5 + BM25 hybrid retrieval + reranker
 ├── chat.py                 # Cited RAG Q&A over the document
 ├── voice.py                # Whisper speech-to-text + gTTS spoken answers
 ├── build_chroma_index.py   # One-time legal corpus index builder
-├── legal_corpus.json       # IPC/CrPC/Consumer Protection entries
+├── legal_corpus.json       # BNS/BNSS/BSA + IPC/CrPC + Consumer Protection entries
 ├── chroma_db/              # Persisted vector index
 ├── audio_generator.py      # Translation, script building, gTTS MP3
+├── eval/                   # Evaluation dataset + metrics harness
+├── tests/                  # Pytest unit tests
+├── ci/github-actions.yml  # CI workflow (copy to .github/workflows/ to enable)
 ├── requirements.txt
+├── requirements-dev.txt
 ├── requirements-ocr-fallback.txt
 ├── packages.txt            # Hugging Face Spaces system packages
 └── README.md
@@ -108,8 +116,9 @@ Nyaya-Mitra-v2/
 | PDF rendering | PyMuPDF (no Poppler required) |
 | Document classification | Regex keyword scoring |
 | Legal analysis | Ollama locally (Llama 3.1/3.2), Groq on Hugging Face Spaces |
-| Legal context | ChromaDB + sentence-transformers + cross-encoder reranker |
+| Legal context | ChromaDB + multilingual-e5-small + BM25 + multilingual cross-encoder reranker |
 | Localization | Local LLM field-by-field translation (no external API) |
+| Evaluation | Custom harness (`eval/run_eval.py`) + pytest + GitHub Actions |
 | Text-to-speech | gTTS |
 | Speech-to-text | faster-whisper (Whisper model, runs locally) |
 | Audio preprocessing | static-ffmpeg (bundled ffmpeg/ffprobe) |
@@ -148,10 +157,16 @@ pip install -r requirements.txt
 
 # Optional: multilingual OCR fallback when Tesseract is not installed
 pip install -r requirements-ocr-fallback.txt
+
+# Optional: tests, lint, evaluation
+pip install -r requirements-dev.txt
 ```
 
 > The first OCR request may take a few minutes while EasyOCR downloads its
 > models. They are cached in `~/.EasyOCR` and reused afterwards.
+>
+> The first RAG request downloads `multilingual-e5-small` (~120 MB) and the
+> multilingual cross-encoder reranker (~470 MB). They are cached afterwards.
 >
 > The first voice request also downloads the Whisper model
 > (`small` by default, about 500 MB). Use `WHISPER_MODEL=tiny` or `base` for
@@ -266,6 +281,56 @@ On a phone, browser microphone access requires a secure context — use the HTTP
 
 ---
 
+## 📊 Evaluation
+
+Run the built-in evaluation harness:
+
+```bash
+python eval/run_eval.py
+```
+
+It measures:
+
+- date extraction recall and precision
+- document classification accuracy
+- retrieval Hit@1, Hit@3, and MRR
+- schema validation accuracy
+- per-stage latency
+
+Current results on the included synthetic dataset:
+
+| Metric | Result |
+|---|---|
+| Date recall | **100%** |
+| Date precision | **100%** |
+| Document classification | **100%** |
+| Retrieval Hit@1 | **78.3%** |
+| Retrieval Hit@3 | **100%** |
+| Retrieval MRR | **0.891** |
+| Schema validation | **100%** |
+
+The multilingual hybrid-RAG upgrade moved retrieval on the same 18-query core set from:
+
+| Version | Hit@1 | Hit@3 | MRR | Indic queries hit |
+|---|---|---|---|---|
+| English-only dense retrieval | 61.1% | 77.8% | 0.694 | 0 / 4 |
+| Multilingual E5 + BM25 + reranker | **77.8%** | **100%** | **0.889** | **4 / 4** |
+
+The full 23-query benchmark (which adds five BNS/BNSS/BSA questions) scores **78.3% Hit@1, 100% Hit@3, and 0.891 MRR**.
+
+**Caveat:** the dataset is currently 10 synthetic documents, 23 retrieval questions, and 3 schema cases. It is a starter benchmark, not a substitute for real anonymised documents reviewed by a lawyer.
+
+### Tests and CI
+
+```bash
+pytest -q
+ruff check .
+```
+
+The GitHub Actions workflow is stored in `ci/github-actions.yml`. Enable it by copying it to `.github/workflows/ci.yml` and pushing with a token that has `workflow` scope, or add it through the GitHub web UI. It runs lint, tests, and the evaluation harness on every push.
+
+---
+
 ## 📋 Supported inputs and document types
 
 **Inputs:** PDF, PNG, JPG/JPEG, WEBP, TIFF, BMP — one file or many pages at once.
@@ -285,6 +350,8 @@ On a phone, browser microphone access requires a secure context — use the HTTP
 | `OLLAMA_MODEL` | `llama3.1:8b` | Ollama model name (`llama3.2:3b` for a lighter test model) |
 | `GROQ_API_KEY` | unset | Groq API key when `LLM_PROVIDER=groq` |
 | `GROQ_MODEL` | `llama-3.1-8b-instant` | Groq model name |
+| `EMBEDDING_MODEL` | `intfloat/multilingual-e5-small` | Dense retrieval embedding model |
+| `RERANK_MODEL` | `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` | Multilingual cross-encoder reranker |
 | `OCR_LANGUAGES` | `eng+hin` | Default OCR language string used outside the UI |
 | `TESSERACT_CMD` | auto-detected | Path to the tesseract binary |
 | `WHISPER_MODEL` | `small` | Whisper model size (`tiny`, `base`, `small`, `medium`, `large-v3`) |
@@ -299,9 +366,11 @@ On a phone, browser microphone access requires a secure context — use the HTTP
 
 - OCR quality depends on photo clarity; well-lit, straight, full-page photos work best.
 - The first OCR request can be slow while EasyOCR downloads models.
-- Tamil OCR currently needs Tesseract: EasyOCR's bundled Tamil model has a checkpoint compatibility issue on some installs.
 - The analysis prompt currently uses the first ~12,000 characters of the extracted text.
 - Chat answers use the same local model and the current legal corpus; a larger corpus will improve them.
+- The BNS/BNSS/BSA entries are a starter mapping (21 entries) and need review by a lawyer; the corpus is not yet comprehensive.
+- The evaluation dataset is small and synthetic; expand it with anonymised real documents and lawyer-reviewed labels.
+- Tamil OCR still needs Tesseract for reliable results.
 - Voice input needs a microphone; on phones this requires the HTTPS Gradio share link, or upload a voice note.
 - Whisper accuracy drops with background noise, strong accents, or very quiet recordings.
 - The first voice request downloads the Whisper model (`small` is about 500 MB).

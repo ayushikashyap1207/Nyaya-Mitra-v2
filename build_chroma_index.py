@@ -6,6 +6,8 @@ import os
 import chromadb
 from sentence_transformers import SentenceTransformer
 
+from rag import EMBEDDING_MODEL, passage_text
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
 logger = logging.getLogger("build_chroma_index")
 
@@ -47,15 +49,20 @@ def main():
         corpus = json.load(f)
     logger.info("Loaded %d entries from legal_corpus.json", len(corpus))
 
-    model = SentenceTransformer("all-MiniLM-L6-v2")
-    logger.info("Embedding model loaded")
+    model = SentenceTransformer(EMBEDDING_MODEL)
+    logger.info("Embedding model loaded | model=%s", EMBEDDING_MODEL)
 
     client = chromadb.PersistentClient(path=CHROMA_PATH)
+    try:
+        client.delete_collection(COLLECTION_NAME)
+        logger.info("Deleted old collection '%s' for a clean rebuild", COLLECTION_NAME)
+    except Exception:
+        pass
     collection = client.get_or_create_collection(COLLECTION_NAME)
 
     ids = [e["id"] for e in corpus]
     documents = [entry_display_text(e) for e in corpus]
-    embed_texts = [entry_embedding_text(e) for e in corpus]
+    embed_texts = [passage_text(entry_embedding_text(e)) for e in corpus]
     metadatas = [build_metadata(e) for e in corpus]
 
     logger.info("Encoding %d entries...", len(corpus))

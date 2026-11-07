@@ -4,19 +4,21 @@ import logging
 import os
 import time
 import traceback
+import urllib.parse
 
 import gradio as gr
 
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
-# Gradio uses ffprobe/ffmpeg to preprocess uploaded audio. static-ffmpeg
-# bundles both binaries, so voice input works without a system ffmpeg install.
-try:
-    import static_ffmpeg
 
-    static_ffmpeg.add_paths()
-except Exception:
-    pass
+def ensure_ffmpeg() -> None:
+    """Make ffmpeg/ffprobe available for Gradio audio preprocessing."""
+    try:
+        import static_ffmpeg
+
+        static_ffmpeg.add_paths()
+    except Exception:
+        pass
 
 
 def safe_text(text) -> str:
@@ -75,6 +77,93 @@ OCR_LANGUAGE_BY_UI = {
     "Telugu": "eng+tel",
 }
 
+RESULT_LABELS = {
+    "English": {
+        "case_summary": "Case summary",
+        "important_dates": "Important dates",
+        "dates_deadlines": "Dates &amp; deadlines found",
+        "all_dates": "All dates &amp; deadlines found in the document",
+        "if_ignored": "⚠️ If you ignore this document",
+        "what_next": "What to do next",
+        "more_details": "More details",
+        "sources_used": "Sources used",
+        "people_involved": "People involved",
+        "key_conditions": "Key conditions",
+        "legal_rights": "Your legal rights",
+        "high": "High priority",
+        "medium": "Medium priority",
+        "low": "Low priority",
+    },
+    "Hindi": {
+        "case_summary": "केस सारांश",
+        "important_dates": "महत्वपूर्ण तिथियाँ",
+        "dates_deadlines": "मिली तिथियाँ और समय-सीमाएँ",
+        "all_dates": "दस्तावेज़ में मिली सभी तिथियाँ और समय-सीमाएँ",
+        "if_ignored": "⚠️ अगर आप इस दस्तावेज़ को नज़रअंदाज़ करते हैं",
+        "what_next": "आगे क्या करें",
+        "more_details": "अधिक जानकारी",
+        "sources_used": "इस्तेमाल किए गए स्रोत",
+        "people_involved": "शामिल लोग",
+        "key_conditions": "मुख्य शर्तें",
+        "legal_rights": "आपके कानूनी अधिकार",
+        "high": "उच्च प्राथमिकता",
+        "medium": "मध्यम प्राथमिकता",
+        "low": "कम प्राथमिकता",
+    },
+    "Marathi": {
+        "case_summary": "प्रकरण सारांश",
+        "important_dates": "महत्त्वाच्या तारखा",
+        "dates_deadlines": "सापडलेल्या तारखा आणि मुदती",
+        "all_dates": "दस्तऐवजातील सर्व तारखा आणि मुदती",
+        "if_ignored": "⚠️ जर तुम्ही हा दस्तऐवज दुर्लक्षित केला तर",
+        "what_next": "पुढे काय करावे",
+        "more_details": "अधिक माहिती",
+        "sources_used": "वापरलेले स्रोत",
+        "people_involved": "समाविष्ट व्यक्ती",
+        "key_conditions": "मुख्य अटी",
+        "legal_rights": "तुमचे कायदेशीर अधिकार",
+        "high": "उच्च प्राधान्य",
+        "medium": "मध्यम प्राधान्य",
+        "low": "कमी प्राधान्य",
+    },
+    "Tamil": {
+        "case_summary": "வழக்கு சுருக்கம்",
+        "important_dates": "முக்கிய தேதிகள்",
+        "dates_deadlines": "கிடைத்த தேதிகள் மற்றும் காலக்கெடுகள்",
+        "all_dates": "ஆவணத்தில் உள்ள அனைத்து தேதிகள் மற்றும் காலக்கெடுகள்",
+        "if_ignored": "⚠️ இந்த ஆவணத்தை புறக்கணித்தால்",
+        "what_next": "அடுத்து என்ன செய்ய வேண்டும்",
+        "more_details": "மேலும் விவரங்கள்",
+        "sources_used": "பயன்படுத்தப்பட்ட ஆதாரங்கள்",
+        "people_involved": "ஈடுபட்டவர்கள்",
+        "key_conditions": "முக்கிய நிபந்தனைகள்",
+        "legal_rights": "உங்கள் சட்ட உரிமைகள்",
+        "high": "அதிக முன்னுரிமை",
+        "medium": "நடுத்தர முன்னுரிமை",
+        "low": "குறைந்த முன்னுரிமை",
+    },
+    "Telugu": {
+        "case_summary": "కేసు సారాంశం",
+        "important_dates": "ముఖ్యమైన తేదీలు",
+        "dates_deadlines": "కనుగొన్న తేదీలు మరియు గడువులు",
+        "all_dates": "పత్రంలోని అన్ని తేదీలు మరియు గడువులు",
+        "if_ignored": "⚠️ మీరు ఈ పత్రాన్ని నిర్లక్ష్యం చేస్తే",
+        "what_next": "తర్వాత ఏమి చేయాలి",
+        "more_details": "మరిన్ని వివరాలు",
+        "sources_used": "ఉపయోగించిన మూలాలు",
+        "people_involved": "పాల్గొన్న వ్యక్తులు",
+        "key_conditions": "ముఖ్యమైన షరతులు",
+        "legal_rights": "మీ చట్టపరమైన హక్కులు",
+        "high": "అధిక ప్రాధాన్యత",
+        "medium": "మధ్యస్థ ప్రాధాన్యత",
+        "low": "తక్కువ ప్రాధాన్యత",
+    },
+}
+
+
+def labels_for(language: str) -> dict:
+    return RESULT_LABELS.get(language, RESULT_LABELS["English"])
+
 # These fields must not be translated: dates and names must stay exactly as
 # they appear in the document.
 KEEP_AS_IS_KEYS = {"date", "name", "urgency_level"}
@@ -88,7 +177,12 @@ EMPTY_RESULT_HTML = """
 """
 
 
-def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
+def format_analysis_html(
+    analysis: dict,
+    doc_label: str,
+    all_dates=None,
+    language: str = "English",
+) -> str:
     """
     Build a simple, phone-first result view:
       1. urgency banner
@@ -104,9 +198,11 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
     if "error" in analysis:
         return f"<p class='nm-error'>Analysis failed: {esc(analysis.get('error'))}</p>"
 
+    labels = labels_for(language)
     urgency = safe_text(analysis.get("urgency_level", "MEDIUM")).upper() or "MEDIUM"
     urgency_color = get_urgency_color(urgency)
     urgency_emoji = URGENCY_EMOJI.get(urgency, "🟠")
+    urgency_label = labels.get(urgency.lower(), f"{urgency.title()} priority")
     urgency_reason = analysis.get("urgency_reason", "")
     summary = analysis.get("simple_summary", "")
 
@@ -116,7 +212,7 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
         f"""
         <div class="nm-urgency" style="background:{urgency_color}12; border:1px solid {urgency_color};">
           <div class="nm-urgency-title" style="color:{urgency_color};">
-            {urgency_emoji} {esc(urgency.title())} priority
+            {urgency_emoji} {esc(urgency_label)}
           </div>
           {f'<div class="nm-urgency-reason">{esc(urgency_reason)}</div>' if urgency_reason else ''}
         </div>
@@ -127,7 +223,7 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
         f"""
         <div class="nm-card nm-summary">
           <div class="nm-doctype">{esc(doc_label or 'Legal Document')}</div>
-          <div class="nm-label">Case summary</div>
+          <div class="nm-label">{labels['case_summary']}</div>
           <div class="nm-summary-text">{esc(summary) or 'No summary could be generated.'}</div>
         </div>
         """
@@ -141,7 +237,7 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
     if dates:
         parts.append(
             f'<div class="nm-card nm-dates-card">'
-            f'<div class="nm-label">Important dates ({len(dates)})</div>'
+            f'<div class="nm-label">{labels["important_dates"]} ({len(dates)})</div>'
         )
         for item in dates:
             if not isinstance(item, dict):
@@ -166,7 +262,7 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
             parts.append(
                 f"""
                 <details class="nm-card nm-details">
-                  <summary>All dates &amp; deadlines found in the document ({len(all_dates)})</summary>
+                  <summary>{labels['all_dates']} ({len(all_dates)})</summary>
                   <div class="nm-chips">{all_dates_chips}</div>
                 </details>
                 """
@@ -175,7 +271,7 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
         parts.append(
             f"""
             <div class="nm-card nm-dates-card">
-              <div class="nm-label">Dates &amp; deadlines found ({len(all_dates)})</div>
+              <div class="nm-label">{labels['dates_deadlines']} ({len(all_dates)})</div>
               <div class="nm-muted" style="margin-bottom:8px;">
                 The AI did not rank specific dates, so here is every date and deadline
                 found in the text.
@@ -186,8 +282,25 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
         )
     else:
         parts.append(
-            '<div class="nm-card"><div class="nm-label">Important dates</div>'
+            f'<div class="nm-card"><div class="nm-label">{labels["important_dates"]}</div>'
             '<div class="nm-muted">No specific dates were found in this document.</div></div>'
+        )
+
+    share_lines = []
+    if summary:
+        share_lines.append(summary)
+    if dates:
+        share_lines.append(f"{labels['important_dates']}:")
+        for item in dates:
+            if isinstance(item, dict):
+                share_lines.append(
+                    f"- {item.get('date', '')}: {item.get('label', '')}"
+                )
+    if share_lines:
+        share_text = urllib.parse.quote("\n".join(share_lines)[:1500])
+        parts.append(
+            f'<a class="nm-share" href="https://wa.me/?text={share_text}" '
+            'target="_blank" rel="noopener">📲 Share this summary on WhatsApp</a>'
         )
 
     ignored = analysis.get("what_happens_if_ignored", "")
@@ -195,7 +308,7 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
         parts.append(
             f"""
             <div class="nm-card nm-warning">
-              <div class="nm-label">⚠️ If you ignore this document</div>
+              <div class="nm-label">{labels['if_ignored']}</div>
               <div class="nm-warning-text">{esc(ignored)}</div>
             </div>
             """
@@ -205,7 +318,7 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
     if steps:
         parts.append(
             '<div class="nm-card nm-steps">'
-            '<div class="nm-label">What to do next</div>'
+            f'<div class="nm-label">{labels["what_next"]}</div>'
         )
         for index, step in enumerate(steps, start=1):
             parts.append(
@@ -225,11 +338,11 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
     if parties or conditions or rights:
         parts.append(
             '<details class="nm-card nm-details">'
-            '<summary>More details</summary>'
+            f'<summary>{labels["more_details"]}</summary>'
         )
 
         if parties:
-            parts.append('<div class="nm-subhead">People involved</div>')
+            parts.append(f'<div class="nm-subhead">{labels["people_involved"]}</div>')
             for person in parties:
                 if not isinstance(person, dict):
                     continue
@@ -241,12 +354,12 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
                 )
 
         if conditions:
-            parts.append('<div class="nm-subhead">Key conditions</div>')
+            parts.append(f'<div class="nm-subhead">{labels["key_conditions"]}</div>')
             for condition in conditions:
                 parts.append(f'<div class="nm-bullet">• {esc(condition)}</div>')
 
         if rights:
-            parts.append('<div class="nm-subhead">Your legal rights</div>')
+            parts.append(f'<div class="nm-subhead">{labels["legal_rights"]}</div>')
             for right in rights:
                 parts.append(f'<div class="nm-bullet">✓ {esc(right)}</div>')
 
@@ -254,19 +367,20 @@ def format_analysis_html(analysis: dict, doc_label: str, all_dates=None) -> str:
 
     sources = analysis.get("_sources") or []
     if sources:
-        parts.append(format_sources_html(sources))
+        parts.append(format_sources_html(sources, language=language))
 
     return "".join(parts)
 
 
-def format_sources_html(hits) -> str:
+def format_sources_html(hits, language: str = "English") -> str:
     """Render cited RAG hits below a chat answer."""
     if not hits:
         return ""
 
+    labels = labels_for(language)
     parts = [
         '<div class="nm-card nm-sources">'
-        '<div class="nm-label">Sources used</div>'
+        f'<div class="nm-label">{labels["sources_used"]}</div>'
     ]
     seen = set()
     for hit in hits:
@@ -458,6 +572,13 @@ def process_document(files, language, progress=None):
             None,
             None,
         )
+    finally:
+        # Privacy: do not keep uploaded documents around after extraction.
+        for path in paths:
+            try:
+                os.remove(path)
+            except OSError:
+                pass
 
     if not is_text_usable(text):
         logger.warning(
@@ -525,7 +646,9 @@ def process_document(files, language, progress=None):
     # --- Stage 4: Render the localized analysis -----------------------------
     report(0.7, "Building the result…")
     try:
-        html_output = format_analysis_html(analysis, doc_label, all_dates)
+        html_output = format_analysis_html(
+            analysis, doc_label, all_dates, language=language
+        )
     except Exception:
         logger.error("HTML rendering failed\n%s", traceback.format_exc())
         return (
@@ -610,7 +733,9 @@ def chat_answer(question, history, document_state, language="Hindi"):
             "I could not find a clear answer. Please ask a lawyer or your "
             "nearest legal aid centre."
         )
-        sources_html = format_sources_html(result.get("sources") or [])
+        sources_html = format_sources_html(
+            result.get("sources") or [], language=language
+        )
     except ValueError as e:
         logger.error("Chat model unavailable | %s", e)
         answer = (
@@ -893,6 +1018,23 @@ footer {
     margin: 0 5px 5px 0;
     font-size: 13px;
     color: #374151;
+}
+
+.nm-share {
+    display: inline-block;
+    background: #ecfdf5;
+    border: 1px solid #86efac;
+    color: #166534;
+    border-radius: 999px;
+    padding: 9px 14px;
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nm-share:hover {
+    background: #dcfce7;
 }
 
 .nm-warning {
@@ -1343,6 +1485,7 @@ def ensure_legal_index() -> None:
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", "7860"))
     share = os.environ.get("GRADIO_SHARE", "0") == "1"
+    ensure_ffmpeg()
     ensure_legal_index()
     app.queue().launch(
         server_name="0.0.0.0",

@@ -45,13 +45,20 @@ _PATTERNS = [
     re.compile(rf"(?<!\d)\d{{1,2}}\s+{_INDIC_MONTHS}\s+\d{{4}}(?!\d)"),
     # जनवरी 12, 2025 / జనవరి 12, 2025
     re.compile(rf"(?<!\d){_INDIC_MONTHS}\s+\d{{1,2}},?\s+\d{{4}}(?!\d)"),
-    # Relative deadlines: within 30 days, after 2 weeks, 90 days from ...
+    # Relative deadlines: within 30 days, after 2 weeks, within 24 hours, ...
     re.compile(
-        r"\b(?:within|after|before)\s+\d{1,3}\s+(?:days?|weeks?|months?|years?)\b",
+        r"\b(?:within|after|before)\s+\d{1,3}\s+"
+        r"(?:hours?|days?|weeks?|months?|years?)\b",
         re.IGNORECASE,
     ),
     re.compile(
-        r"\b\d{1,3}\s+(?:days?|weeks?|months?)\s+(?:from|of|after)\b",
+        r"\b\d{1,3}\s+(?:hours?|days?|weeks?|months?)\s+(?:from|of|after)\b",
+        re.IGNORECASE,
+    ),
+    # 30 days notice / two weeks notice
+    re.compile(
+        r"\b\d{1,3}\s+(?:days?|weeks?|months?)\s+"
+        r"(?:notice|notice period|advance notice)\b",
         re.IGNORECASE,
     ),
 ]
