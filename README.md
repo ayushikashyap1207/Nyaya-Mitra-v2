@@ -1,16 +1,4 @@
----
-title: Nyaya Mitra — AI Legal Assistant
-emoji: ⚖️
-colorFrom: blue
-colorTo: green
-sdk: gradio
-sdk_version: 4.44.0
-python_version: '3.12'
-app_file: app.py
-pinned: false
-license: mit
-short_description: Understand any Indian legal document in minutes
----
+
 
 <p align="center">
   <img src="docs/screenshots/analysis-hero.png" width="300" alt="Nyaya Mitra Hindi case summary and important dates" />
