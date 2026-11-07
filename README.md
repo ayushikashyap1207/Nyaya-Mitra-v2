@@ -25,6 +25,8 @@ Nyaya Mitra is a free AI legal-document assistant built for rural Indian citizen
 
 The interface is mobile-first: it works comfortably on a phone browser.
 
+**Current status:** 216 legal-corpus entries (including a BNS/BNSS/BSA starter set), multilingual hybrid RAG, cited Q&A, voice input/output, 23 passing tests, and an evaluation harness with published metrics.
+
 ---
 
 ## ✨ What is new in this version
@@ -44,6 +46,7 @@ The interface is mobile-first: it works comfortably on a phone browser.
 | 📱 Mobile-friendly UI | Single-column layout, large tap targets, 16px inputs (no iOS zoom), stacked date cards, and a max-width that fits small screens. |
 | 🌐 Localized analysis | The LLM writes the summary, dates, urgency, rights, and audio script in the selected language. If a small model slips into English, a field-by-field local translation pass fixes it — no external translation API or rate limit. |
 | 🎧 Audio | gTTS reads the localized summary aloud. Regional-script text is preserved correctly. |
+| 🔐 Privacy and sharing | Uploaded documents are deleted immediately after extraction, logs avoid document text, and the result page includes a WhatsApp share link. Result labels are localized into all four supported languages. |
 
 ---
 
@@ -65,12 +68,12 @@ rag.py  →  multilingual hybrid retrieval (ChromaDB + BM25 + reranker)
            with BNS/BNSS/BSA + IPC/CrPC/Consumer Protection sources
           │
           ▼
-analyser.py  →  local Llama 3.1 via Ollama
+analyser.py  →  local Llama via Ollama, or Groq on Spaces
   Pydantic-validated JSON (in the selected language): summary,
   all critical dates, parties, conditions, urgency, rights, next steps
           │
           ▼
-app.py  →  localized HTML + gTTS audio
+app.py  →  localized HTML + gTTS audio + WhatsApp share
           │
           ▼
 chat.py  →  follow-up questions with cited RAG sources
@@ -86,17 +89,17 @@ Nyaya-Mitra-v2/
 ├── pdf_extractor.py        # PDF text extraction + image OCR + multi-file input
 ├── date_extractor.py       # Deterministic date/deadline scanner
 ├── classifier.py           # Keyword-based document type detection
-├── analyser.py             # Ollama LLM call + Pydantic validation + retries
+├── analyser.py             # LLM provider + Pydantic validation + retries
 ├── rag.py                  # Multilingual E5 + BM25 hybrid retrieval + reranker
 ├── chat.py                 # Cited RAG Q&A over the document
 ├── voice.py                # Whisper speech-to-text + gTTS spoken answers
 ├── build_chroma_index.py   # One-time legal corpus index builder
 ├── legal_corpus.json       # BNS/BNSS/BSA + IPC/CrPC + Consumer Protection entries
 ├── chroma_db/              # Persisted vector index
-├── audio_generator.py      # Translation, script building, gTTS MP3
+├── audio_generator.py      # Translation helpers + gTTS audio script
 ├── eval/                   # Evaluation dataset + metrics harness
 ├── tests/                  # Pytest unit tests
-├── ci/github-actions.yml  # CI workflow (copy to .github/workflows/ to enable)
+├── ci/github-actions.yml   # CI workflow (copy to .github/workflows/ to enable)
 ├── requirements.txt
 ├── requirements-dev.txt
 ├── requirements-ocr-fallback.txt
@@ -178,22 +181,34 @@ pip install -r requirements-dev.txt
 # Install Ollama from https://ollama.com, then:
 ollama serve
 ollama pull llama3.1:8b
+
+# Lighter test model:
+ollama pull llama3.2:3b
 ```
 
 The app uses `llama3.1:8b` by default. Override with environment variables:
 
 ```bash
 export OLLAMA_HOST=http://localhost:11434
-export OLLAMA_MODEL=llama3.1:8b
+export OLLAMA_MODEL=llama3.2:3b
 ```
 
-### 4. Build the legal vector index (first run only)
+Or run against Groq instead of Ollama:
+
+```bash
+export LLM_PROVIDER=groq
+export GROQ_API_KEY=your_key
+export GROQ_MODEL=llama-3.1-8b-instant
+```
+
+### 4. Build the legal vector index
 
 ```bash
 python build_chroma_index.py
 ```
 
-If `chroma_db/` is missing, the app still works but skips legal-context retrieval.
+The app also builds the index automatically on first startup if `chroma_db/`
+is missing.
 
 ### 5. Run
 
@@ -365,20 +380,29 @@ The GitHub Actions workflow is stored in `ci/github-actions.yml`. Enable it by c
 ## ⚠️ Known limitations
 
 - OCR quality depends on photo clarity; well-lit, straight, full-page photos work best.
-- The first OCR request can be slow while EasyOCR downloads models.
+- The first OCR request can be slow if the optional EasyOCR fallback downloads models.
 - The analysis prompt currently uses the first ~12,000 characters of the extracted text.
-- Chat answers use the same local model and the current legal corpus; a larger corpus will improve them.
+- Chat answers use the same configured LLM and the current legal corpus; a larger corpus will improve them.
 - The BNS/BNSS/BSA entries are a starter mapping (21 entries) and need review by a lawyer; the corpus is not yet comprehensive.
 - The evaluation dataset is small and synthetic; expand it with anonymised real documents and lawyer-reviewed labels.
 - Tamil OCR still needs Tesseract for reliable results.
 - Voice input needs a microphone; on phones this requires the HTTPS Gradio share link, or upload a voice note.
 - Whisper accuracy drops with background noise, strong accents, or very quiet recordings.
 - The first voice request downloads the Whisper model (`small` is about 500 MB).
-- Local Llama 3.1 8B inference can be slow on CPU, especially the first request.
+- Local LLM inference (3B/8B) can be slow on CPU, especially the first request.
 - gTTS requires an internet connection.
 - Very small local models may need the field-by-field localization fallback; 8B-quality models produce more polished regional-language text.
 - Tamil/Telugu TTS quality is good but not perfect for complex legal terms.
 - This is general legal information, **not legal advice**.
+
+---
+
+## 🔐 Privacy and data handling
+
+- Uploaded PDFs/images are deleted immediately after text extraction.
+- Logs record file basenames, character counts, and timings — not document text.
+- Generated audio files are written to the system temp directory and are not automatically deleted.
+- There is currently no user authentication or persistent storage; do not run a public instance with sensitive real documents without adding access control and a retention policy.
 
 ---
 
