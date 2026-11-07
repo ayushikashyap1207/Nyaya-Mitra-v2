@@ -1,0 +1,2066 @@
+[
+  {
+    "id": "ipc_299_300",
+    "source": "Indian Penal Code",
+    "section": "299-300",
+    "text": "Defines culpable homicide and murder based on the intention or knowledge behind causing death.",
+    "plain_language": "These sections separate 'murder' from lesser forms of causing death, based on what the person intended or knew would happen.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_302",
+    "source": "Indian Penal Code",
+    "section": "302",
+    "text": "Prescribes punishment for murder, including death penalty or life imprisonment, and a fine.",
+    "plain_language": "This is the punishment section for murder — the most serious criminal charge in the IPC.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_304",
+    "source": "Indian Penal Code",
+    "section": "304",
+    "text": "Punishes culpable homicide not amounting to murder, i.e. causing death without the same level of intent as murder.",
+    "plain_language": "Used when someone caused a death but it doesn't meet the legal definition of murder — for example, in a sudden fight.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_304A",
+    "source": "Indian Penal Code",
+    "section": "304A",
+    "text": "Covers death caused by a rash or negligent act not amounting to culpable homicide, such as a fatal road accident.",
+    "plain_language": "This is the typical charge in fatal accident cases where there was carelessness but no intent to kill.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_304B",
+    "source": "Indian Penal Code",
+    "section": "304B",
+    "text": "Defines dowry death: an unnatural death of a woman within 7 years of marriage, linked to dowry harassment.",
+    "plain_language": "If a married woman dies under suspicious circumstances within 7 years of marriage and dowry harassment is shown, this section applies.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_306",
+    "source": "Indian Penal Code",
+    "section": "306",
+    "text": "Punishes abetment of suicide — intentionally aiding or instigating a person to end their life.",
+    "plain_language": "This applies when someone's actions are found to have driven another person to suicide.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_307",
+    "source": "Indian Penal Code",
+    "section": "307",
+    "text": "Punishes attempt to murder, where the act was done with the intention or knowledge that could cause death.",
+    "plain_language": "Used when someone tried to kill another person but the victim survived.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_323_324",
+    "source": "Indian Penal Code",
+    "section": "323-324",
+    "text": "Covers voluntarily causing hurt, and causing hurt using a dangerous weapon.",
+    "plain_language": "These cover ordinary physical assault, with a harsher version if a weapon was used.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "ipc_325_326",
+    "source": "Indian Penal Code",
+    "section": "325-326",
+    "text": "Covers voluntarily causing grievous hurt, and causing grievous hurt with a dangerous weapon.",
+    "plain_language": "'Grievous hurt' means serious injuries like fractures or permanent damage — this carries heavier punishment than simple hurt.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_341_342",
+    "source": "Indian Penal Code",
+    "section": "341-342",
+    "text": "Covers wrongful restraint (stopping someone's movement) and wrongful confinement (unlawfully keeping someone confined).",
+    "plain_language": "These apply when someone is physically stopped from moving freely or locked in somewhere against their will.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "ipc_354",
+    "source": "Indian Penal Code",
+    "section": "354",
+    "text": "Punishes assault or use of criminal force on a woman with intent to outrage her modesty.",
+    "plain_language": "This covers physical acts against a woman meant to insult or violate her dignity.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_354A",
+    "source": "Indian Penal Code",
+    "section": "354A",
+    "text": "Defines and punishes sexual harassment, including unwelcome physical contact and demands for sexual favours.",
+    "plain_language": "This is the main IPC section used for workplace and public sexual harassment complaints.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "ipc_375_376",
+    "source": "Indian Penal Code",
+    "section": "375-376",
+    "text": "Section 375 defines rape; Section 376 prescribes the punishment, which is enhanced in aggravated cases.",
+    "plain_language": "These are the core sections dealing with sexual assault and its punishment.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_379",
+    "source": "Indian Penal Code",
+    "section": "379",
+    "text": "Punishes theft — dishonestly taking movable property out of someone's possession without consent.",
+    "plain_language": "This is the basic theft charge, covering everything from pickpocketing to stealing goods.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "ipc_380",
+    "source": "Indian Penal Code",
+    "section": "380",
+    "text": "Punishes theft committed in a building, tent, or vessel used as a human dwelling or for property storage.",
+    "plain_language": "This is a more serious form of theft — burglary-type theft from a home or storage space.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "ipc_384_385",
+    "source": "Indian Penal Code",
+    "section": "384-385",
+    "text": "Covers extortion — putting a person in fear of injury to dishonestly get property or a valuable security from them.",
+    "plain_language": "This applies to blackmail or threats used to force someone to hand over money or property.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "ipc_390_392",
+    "source": "Indian Penal Code",
+    "section": "390-392",
+    "text": "Defines robbery (theft or extortion with the use or threat of force) and prescribes its punishment.",
+    "plain_language": "Robbery is theft or extortion combined with force or the threat of force against a person.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_406",
+    "source": "Indian Penal Code",
+    "section": "406",
+    "text": "Punishes criminal breach of trust — dishonestly misusing property entrusted to someone.",
+    "plain_language": "Applies when someone was given money or property to manage or hold, and misused it for themselves.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "ipc_409",
+    "source": "Indian Penal Code",
+    "section": "409",
+    "text": "Punishes criminal breach of trust by a public servant, banker, or agent — carrying a heavier penalty than 406.",
+    "plain_language": "This is a stricter version of breach of trust when the person was in a position of professional responsibility, like a banker or agent.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_415_420",
+    "source": "Indian Penal Code",
+    "section": "415-420",
+    "text": "Section 415 defines cheating; Section 420 punishes cheating that dishonestly induces someone to deliver property.",
+    "plain_language": "These cover fraud — deceiving someone to hand over money, property, or a valuable document.",
+    "doc_types": [
+      "fir",
+      "legal_notice",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_463_465",
+    "source": "Indian Penal Code",
+    "section": "463-465",
+    "text": "Defines forgery (making a false document with intent to cause harm) and prescribes punishment for forgery.",
+    "plain_language": "This applies when someone creates or alters a document to deceive others or cause loss.",
+    "doc_types": [
+      "fir",
+      "legal_notice",
+      "property_document"
+    ]
+  },
+  {
+    "id": "ipc_468",
+    "source": "Indian Penal Code",
+    "section": "468",
+    "text": "Punishes forgery committed for the purpose of cheating.",
+    "plain_language": "A heavier charge than plain forgery, used when the forged document was made specifically to defraud someone.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "ipc_471",
+    "source": "Indian Penal Code",
+    "section": "471",
+    "text": "Punishes using a forged document as if it were genuine, knowing it to be forged.",
+    "plain_language": "This applies to a person who knowingly uses a fake document, even if they didn't create it themselves.",
+    "doc_types": [
+      "fir",
+      "legal_notice",
+      "property_document"
+    ]
+  },
+  {
+    "id": "ipc_493_494",
+    "source": "Indian Penal Code",
+    "section": "493-494",
+    "text": "Section 493 covers cohabitation caused by a deceitful belief of marriage; Section 494 punishes bigamy — marrying again while a spouse is still living.",
+    "plain_language": "These cover marriage-related deception, including marrying a second time without legally ending the first marriage.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_498A",
+    "source": "Indian Penal Code",
+    "section": "498A",
+    "text": "Punishes a husband or his relatives for subjecting a married woman to cruelty, including dowry-related harassment.",
+    "plain_language": "This is the main section used in domestic cruelty and dowry harassment complaints against a husband or in-laws.",
+    "doc_types": [
+      "fir",
+      "court_summons",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "ipc_499_500",
+    "source": "Indian Penal Code",
+    "section": "499-500",
+    "text": "Section 499 defines defamation — harming someone's reputation through words, signs, or visible representation; Section 500 prescribes punishment.",
+    "plain_language": "These cover making false statements that damage someone's reputation, whether spoken, written, or published.",
+    "doc_types": [
+      "legal_notice",
+      "fir"
+    ]
+  },
+  {
+    "id": "ipc_503_506",
+    "source": "Indian Penal Code",
+    "section": "503-506",
+    "text": "Section 503 defines criminal intimidation — threatening injury to a person, reputation, or property; Section 506 prescribes punishment.",
+    "plain_language": "This covers threats made to frighten someone into doing or not doing something.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "ipc_509",
+    "source": "Indian Penal Code",
+    "section": "509",
+    "text": "Punishes words, gestures, or acts intended to insult the modesty of a woman.",
+    "plain_language": "This applies to comments, gestures, or actions in public meant to insult or embarrass a woman.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "ipc_511",
+    "source": "Indian Penal Code",
+    "section": "511",
+    "text": "Punishes an attempt to commit an offence punishable with life imprisonment or imprisonment, where no separate punishment is provided.",
+    "plain_language": "This is the general 'attempt' provision applied when a crime was tried but not completed.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_2h",
+    "source": "Code of Criminal Procedure",
+    "section": "2(h)",
+    "text": "Defines 'investigation' as all proceedings for collecting evidence conducted by a police officer or authorised person.",
+    "plain_language": "This defines what police 'investigation' legally means — gathering evidence after a complaint or FIR.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_41",
+    "source": "Code of Criminal Procedure",
+    "section": "41",
+    "text": "Lists the circumstances in which police may arrest a person without a warrant, generally limited to cognizable offences.",
+    "plain_language": "Police generally need a specific reason (like a serious ongoing offence) to arrest someone without first getting a warrant from a magistrate.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_41A",
+    "source": "Code of Criminal Procedure",
+    "section": "41A",
+    "text": "Requires police to issue a notice of appearance instead of arrest in cases where arrest is not immediately necessary.",
+    "plain_language": "For many offences, police must first call you in with a notice rather than arresting you outright — know that arrest is not always the first step.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_46",
+    "source": "Code of Criminal Procedure",
+    "section": "46",
+    "text": "Describes how an arrest is made — by actually touching or confining the body of the person, unless they submit to custody.",
+    "plain_language": "This sets the basic legal manner in which an arrest must be carried out.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_50",
+    "source": "Code of Criminal Procedure",
+    "section": "50",
+    "text": "Requires police to inform an arrested person of the grounds of arrest and their right to bail, if the offence is bailable.",
+    "plain_language": "Anyone arrested has the right to be told why, and whether they can get bail — police are legally required to inform you.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_57",
+    "source": "Code of Criminal Procedure",
+    "section": "57",
+    "text": "Requires that a person arrested without a warrant be produced before a magistrate within 24 hours, excluding travel time.",
+    "plain_language": "Police cannot hold someone indefinitely — an arrested person must be presented before a magistrate within 24 hours.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_154",
+    "source": "Code of Criminal Procedure",
+    "section": "154",
+    "text": "Sets out the procedure for registering a First Information Report (FIR) for a cognizable offence.",
+    "plain_language": "This is the section that requires police to formally register your complaint as an FIR for serious ('cognizable') offences.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_155",
+    "source": "Code of Criminal Procedure",
+    "section": "155",
+    "text": "Governs information about non-cognizable offences, which police cannot investigate without magistrate permission.",
+    "plain_language": "For less serious ('non-cognizable') offences, police need a magistrate's permission before they can investigate.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_156",
+    "source": "Code of Criminal Procedure",
+    "section": "156",
+    "text": "Empowers police to investigate a cognizable case without needing prior magistrate orders.",
+    "plain_language": "For serious offences, police can start investigating immediately after an FIR, without waiting for court approval.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_161",
+    "source": "Code of Criminal Procedure",
+    "section": "161",
+    "text": "Allows police to examine witnesses during an investigation and record their statements.",
+    "plain_language": "This is the section under which police record witness statements during an investigation.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_164",
+    "source": "Code of Criminal Procedure",
+    "section": "164",
+    "text": "Allows a magistrate to record statements or confessions made during an investigation, giving them added evidentiary value.",
+    "plain_language": "A statement recorded before a magistrate (rather than just police) carries more weight in court.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_167",
+    "source": "Code of Criminal Procedure",
+    "section": "167",
+    "text": "Governs police custody and judicial custody periods when investigation cannot be completed within 24 hours.",
+    "plain_language": "This covers how long police can keep someone in custody while investigation is ongoing, and when they must go before a magistrate.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_173",
+    "source": "Code of Criminal Procedure",
+    "section": "173",
+    "text": "Requires police to file a final report (chargesheet) to the magistrate on completion of investigation.",
+    "plain_language": "Once investigation is done, police must submit a chargesheet — this is what leads to a court case (if evidence supports it).",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_190",
+    "source": "Code of Criminal Procedure",
+    "section": "190",
+    "text": "Empowers a magistrate to take cognizance of an offence based on a complaint, police report, or own knowledge.",
+    "plain_language": "This is how a case formally enters the court system after investigation or a private complaint.",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_200_202",
+    "source": "Code of Criminal Procedure",
+    "section": "200-202",
+    "text": "Sets out the procedure for a magistrate examining a private complaint and deciding whether to proceed.",
+    "plain_language": "If someone files a complaint directly in court (not via police FIR), these sections govern how the magistrate examines it.",
+    "doc_types": [
+      "court_summons",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "crpc_204",
+    "source": "Code of Criminal Procedure",
+    "section": "204",
+    "text": "Empowers a magistrate to issue summons or a warrant to bring the accused before the court.",
+    "plain_language": "This is the section that lets a court legally call ('summon') a person to appear.",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_apperance_generic",
+    "source": "Code of Criminal Procedure",
+    "section": "61-69 (Summons)",
+    "text": "Sets out how summons must be served — generally in person, or on an adult family member if the person can't be found.",
+    "plain_language": "A summons must be properly delivered — either to you directly or to a responsible adult at your residence.",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_warrant_generic",
+    "source": "Code of Criminal Procedure",
+    "section": "70-81 (Warrants)",
+    "text": "Covers the issue and execution of arrest warrants when a person doesn't appear despite a summons.",
+    "plain_language": "If you ignore a court summons, the next step is often a warrant for your arrest — this is why appearing (or getting legal help) matters.",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_313",
+    "source": "Code of Criminal Procedure",
+    "section": "313",
+    "text": "Allows the court to question the accused directly on circumstances appearing against them, without administering an oath.",
+    "plain_language": "During trial, the accused gets a chance to explain the evidence against them directly to the judge.",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_436_437",
+    "source": "Code of Criminal Procedure",
+    "section": "436-437",
+    "text": "Section 436 covers bail as a right in bailable offences; Section 437 covers bail in non-bailable offences, at court's discretion.",
+    "plain_language": "For less serious ('bailable') offences, bail is essentially a right. For serious ('non-bailable') offences, the court decides case by case.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_438",
+    "source": "Code of Criminal Procedure",
+    "section": "438",
+    "text": "Provides for anticipatory bail — applying to a court for bail in advance of a possible arrest.",
+    "plain_language": "If you fear arrest on a false or exaggerated complaint, you can apply for anticipatory bail before the arrest happens.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_439",
+    "source": "Code of Criminal Procedure",
+    "section": "439",
+    "text": "Grants High Courts and Sessions Courts special powers to grant bail, including in serious cases.",
+    "plain_language": "For more serious charges, bail applications often go to a Sessions Court or High Court under this section.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_468_limitation",
+    "source": "Code of Criminal Procedure",
+    "section": "468",
+    "text": "Sets limitation periods after which certain less-serious offences cannot be prosecuted (generally 1-3 years depending on severity).",
+    "plain_language": "For minor offences, there's a time limit on when a case can be filed — very serious crimes have no such limit.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ni_act_138",
+    "source": "Negotiable Instruments Act",
+    "section": "138",
+    "text": "Makes it a criminal offence for a cheque to be dishonoured (bounced) due to insufficient funds, if the drawer fails to pay within 15 days of a demand notice.",
+    "plain_language": "If your cheque bounces, the payee can send you a legal demand notice — you get 15 days to pay before it becomes a criminal case.",
+    "doc_types": [
+      "legal_notice",
+      "fir"
+    ]
+  },
+  {
+    "id": "ni_act_139",
+    "source": "Negotiable Instruments Act",
+    "section": "139",
+    "text": "Creates a legal presumption that a cheque was issued for a debt or liability, unless the accused proves otherwise.",
+    "plain_language": "Courts presume the cheque was for a genuine debt — the burden is on the person who issued the cheque to prove otherwise.",
+    "doc_types": [
+      "legal_notice",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ni_act_141",
+    "source": "Negotiable Instruments Act",
+    "section": "141",
+    "text": "Extends liability for a bounced company cheque to persons in charge of the company's business at the time of the offence.",
+    "plain_language": "If a company's cheque bounces, directors/officers responsible for its business can be personally liable too.",
+    "doc_types": [
+      "legal_notice",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ni_act_142",
+    "source": "Negotiable Instruments Act",
+    "section": "142",
+    "text": "Requires a cheque-bounce complaint to be filed within one month of the cause of action (expiry of the 15-day notice period).",
+    "plain_language": "There's a strict one-month deadline to file a cheque-bounce case after the notice period ends — don't delay.",
+    "doc_types": [
+      "legal_notice",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ni_act_notice_content",
+    "source": "Negotiable Instruments Act",
+    "section": "138 (Notice requirement)",
+    "text": "The demand notice after a bounced cheque must be in writing and sent within 30 days of receiving the bank's dishonour memo.",
+    "plain_language": "The person you owe money to must send the demand notice within 30 days of the cheque bouncing — this is a strict deadline for them too.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "tpa_5",
+    "source": "Transfer of Property Act",
+    "section": "5",
+    "text": "Defines 'transfer of property' as an act by which a living person conveys property to one or more other living persons.",
+    "plain_language": "This is the basic legal definition of what counts as 'transferring' property from one person to another.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "tpa_54",
+    "source": "Transfer of Property Act",
+    "section": "54",
+    "text": "Defines 'sale' as a transfer of ownership in exchange for a price, and requires registration for property valued over Rs. 100.",
+    "plain_language": "A property sale legally transfers ownership for a price — and in practice, almost all sales need to be registered.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "tpa_58",
+    "source": "Transfer of Property Act",
+    "section": "58",
+    "text": "Defines a mortgage as transferring an interest in property as security for a loan or debt.",
+    "plain_language": "A mortgage doesn't transfer full ownership — it uses the property as security for money owed.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "tpa_105",
+    "source": "Transfer of Property Act",
+    "section": "105",
+    "text": "Defines a lease as a transfer of the right to enjoy property for a fixed term, in exchange for rent.",
+    "plain_language": "This is the legal definition of what makes a rent/lease arrangement different from an outright sale.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "tpa_106",
+    "source": "Transfer of Property Act",
+    "section": "106",
+    "text": "Sets default notice periods for terminating a lease (generally 15 days for month-to-month leases, 6 months for yearly leases) unless the agreement specifies otherwise.",
+    "plain_language": "If your rent agreement doesn't specify a notice period, the law provides a default one before either side can end the tenancy.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "tpa_107",
+    "source": "Transfer of Property Act",
+    "section": "107",
+    "text": "Requires leases of immovable property for more than one year to be made through a registered instrument.",
+    "plain_language": "Longer-term rent agreements (over a year) generally need to be registered to be fully valid.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "tpa_108",
+    "source": "Transfer of Property Act",
+    "section": "108",
+    "text": "Lists the respective rights and liabilities of landlords (lessors) and tenants (lessees), including repair and usage obligations.",
+    "plain_language": "This sets the default rules for who is responsible for what — repairs, proper use of the property, etc. — unless the agreement says otherwise.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "tpa_111",
+    "source": "Transfer of Property Act",
+    "section": "111",
+    "text": "Lists the ways a lease can come to an end — including by expiry of term, notice, or breach of an express condition.",
+    "plain_language": "This covers the legal ways a tenancy can end — the lease period running out, proper notice, or breaking a specific term of the agreement.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "reg_act_17",
+    "source": "Registration Act, 1908",
+    "section": "17",
+    "text": "Lists documents for which registration is compulsory, including sale deeds and leases of immovable property for more than one year.",
+    "plain_language": "Certain documents — like sale deeds and long-term leases — are legally required to be registered, not just signed.",
+    "doc_types": [
+      "property_document",
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "reg_act_23",
+    "source": "Registration Act, 1908",
+    "section": "23",
+    "text": "Requires most documents to be presented for registration within 4 months of execution.",
+    "plain_language": "There's a time limit — generally 4 months — to get a document registered after it's signed.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "reg_act_49",
+    "source": "Registration Act, 1908",
+    "section": "49",
+    "text": "States that a document required to be registered, if not registered, cannot be used as evidence of the transaction it records.",
+    "plain_language": "An unregistered document that should have been registered generally can't be used in court to prove the transaction happened.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "stamp_act_3",
+    "source": "Indian Stamp Act, 1899",
+    "section": "3",
+    "text": "Requires stamp duty to be paid on specified instruments, including conveyances, leases, and mortgage deeds.",
+    "plain_language": "Stamp duty is a tax paid on property-related documents — it must be paid for the document to be considered properly executed.",
+    "doc_types": [
+      "property_document",
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "stamp_act_35",
+    "source": "Indian Stamp Act, 1899",
+    "section": "35",
+    "text": "States that an instrument not properly stamped is generally not admissible as evidence in court.",
+    "plain_language": "An under-stamped document can be rejected as evidence in a legal dispute, even if everything else about it is genuine.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "cpa_2_9",
+    "source": "Consumer Protection Act, 2019",
+    "section": "2(9)",
+    "text": "Defines a 'consumer' as a person who buys goods or hires services for consideration, excluding purely commercial resale purposes.",
+    "plain_language": "This defines who counts legally as a 'consumer' with rights under the Act — generally, someone buying for personal use, not resale.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "cpa_2_47",
+    "source": "Consumer Protection Act, 2019",
+    "section": "2(47)",
+    "text": "Defines 'unfair trade practice', including false representation of goods/services and misleading advertisements.",
+    "plain_language": "This covers deceptive sales tactics — false claims about a product or service that mislead a buyer.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "cpa_35",
+    "source": "Consumer Protection Act, 2019",
+    "section": "35",
+    "text": "Allows a consumer to file a complaint before the District Consumer Commission for defective goods, deficient services, or unfair trade practices.",
+    "plain_language": "Consumers can file complaints at the district level for issues like faulty products or poor service, without needing a lawyer.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "cpa_69",
+    "source": "Consumer Protection Act, 2019",
+    "section": "69",
+    "text": "Sets a limitation period of 2 years from the date the cause of action arose to file a consumer complaint.",
+    "plain_language": "You generally have 2 years from the incident (like a faulty purchase) to file a consumer complaint.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "mta_4",
+    "source": "Model Tenancy Act, 2021",
+    "section": "4",
+    "text": "Requires a written tenancy agreement to be submitted to the local Rent Authority for registration.",
+    "plain_language": "Under the model framework, rent agreements are meant to be formally registered with a local Rent Authority, not just signed privately.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "mta_8",
+    "source": "Model Tenancy Act, 2021",
+    "section": "8",
+    "text": "Caps the security deposit at a maximum of 2 months' rent for residential premises and 6 months' for non-residential.",
+    "plain_language": "There's a recommended cap on how much security deposit a landlord can ask for — generally 2 months' rent for a home.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "mta_11",
+    "source": "Model Tenancy Act, 2021",
+    "section": "11",
+    "text": "Requires landlord consent for subletting, and voids any subletting done without written consent.",
+    "plain_language": "A tenant generally cannot sublet the property to someone else without the landlord's written permission.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "mta_21",
+    "source": "Model Tenancy Act, 2021",
+    "section": "21",
+    "text": "Sets out grounds and procedure for a landlord to seek eviction of a tenant, including non-payment of rent and unauthorized structural changes.",
+    "plain_language": "Eviction isn't automatic — a landlord generally has to show a valid reason, like unpaid rent, and follow due process.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "mta_23",
+    "source": "Model Tenancy Act, 2021",
+    "section": "23",
+    "text": "Requires the landlord to give notice before entering the rented premises, except in emergencies.",
+    "plain_language": "A landlord generally can't enter your rented home without notice — except in genuine emergencies.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "cpc_order5",
+    "source": "Code of Civil Procedure, 1908",
+    "section": "Order V",
+    "text": "Governs the issue and service of summons on a defendant in a civil suit, requiring proper delivery and an opportunity to respond.",
+    "plain_language": "In a civil case (like a property or money dispute), you must be formally served with a summons and given a chance to respond.",
+    "doc_types": [
+      "court_summons",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "cpc_order9",
+    "source": "Code of Civil Procedure, 1908",
+    "section": "Order IX",
+    "text": "Covers the consequences of non-appearance of parties, including ex-parte decrees when a defendant fails to appear.",
+    "plain_language": "If you ignore a civil court summons and don't appear, the court can decide the case against you without hearing your side (ex-parte).",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "cpc_order37",
+    "source": "Code of Civil Procedure, 1908",
+    "section": "Order XXXVII",
+    "text": "Provides a summary procedure for suits on negotiable instruments and certain written contracts, moving faster than a regular civil suit.",
+    "plain_language": "Some money-recovery cases (like on a cheque or written agreement) can move through court much faster than a normal lawsuit.",
+    "doc_types": [
+      "legal_notice",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "cpc_s80",
+    "source": "Code of Civil Procedure, 1908",
+    "section": "80",
+    "text": "Requires 2 months' notice before filing most civil suits against the government or a public officer.",
+    "plain_language": "If you want to sue a government body, there's usually a mandatory 2-month notice period before you can file the case.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "limitation_act_general",
+    "source": "Limitation Act, 1963",
+    "section": "General",
+    "text": "Sets time limits within which different types of civil suits must be filed, generally 3 years for most contract and money disputes.",
+    "plain_language": "Most civil claims (like recovering money owed) must be filed within a set time limit — commonly 3 years from when the issue arose.",
+    "doc_types": [
+      "legal_notice",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "const_art14",
+    "source": "Constitution of India",
+    "section": "Article 14",
+    "text": "Guarantees equality before the law and equal protection of the laws to all persons.",
+    "plain_language": "Everyone is entitled to be treated equally under the law, regardless of status.",
+    "doc_types": [
+      "court_summons",
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "const_art20",
+    "source": "Constitution of India",
+    "section": "Article 20",
+    "text": "Protects against conviction for an act that wasn't a crime when committed, double jeopardy, and self-incrimination.",
+    "plain_language": "You can't be punished under a law that didn't exist when you acted, tried twice for the same offence, or forced to testify against yourself.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "const_art21",
+    "source": "Constitution of India",
+    "section": "Article 21",
+    "text": "Guarantees the right to life and personal liberty, which courts have interpreted to include a right to a fair and speedy trial.",
+    "plain_language": "Everyone has a fundamental right to liberty and to a fair, timely legal process — this underlies many procedural protections.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "const_art22",
+    "source": "Constitution of India",
+    "section": "Article 22",
+    "text": "Protects arrested persons' rights, including being informed of grounds of arrest, the right to legal counsel, and production before a magistrate within 24 hours.",
+    "plain_language": "If arrested, you have a constitutional right to know why, to consult a lawyer, and to be brought before a magistrate quickly.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "legal_services_act_12",
+    "source": "Legal Services Authorities Act, 1987",
+    "section": "12",
+    "text": "Sets out who is entitled to free legal aid, including women, children, SC/ST members, and persons with an annual income below a prescribed limit.",
+    "plain_language": "Free legal aid is available to many people by law — including women, children, and those with limited income — through Legal Services Authorities.",
+    "doc_types": [
+      "fir",
+      "court_summons",
+      "legal_notice",
+      "property_document",
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "crpc_304",
+    "source": "Code of Criminal Procedure",
+    "section": "304",
+    "text": "Requires the state to provide a pleader (lawyer) at state expense for an accused person who cannot afford one in a Sessions trial.",
+    "plain_language": "If you can't afford a lawyer for a serious criminal trial, the state is required to provide one for you.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "practical_legal_notice_response",
+    "source": "General Practice",
+    "section": "Responding to a legal notice",
+    "text": "A person who receives a legal notice can respond directly, through their own advocate, ignore it (at their own risk), or attempt settlement — ignoring it does not make the underlying claim go away and may weaken their position if the matter goes to court.",
+    "plain_language": "Getting a legal notice doesn't mean you've lost — but ignoring it is risky. It's usually best to reply (with a lawyer's help if possible) or try to resolve the issue directly.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "practical_court_nonappearance",
+    "source": "General Practice",
+    "section": "Consequences of not appearing in court",
+    "text": "Non-appearance after being properly summoned can lead to an ex-parte order in civil cases, or to a bailable/non-bailable warrant in criminal cases, depending on the offence.",
+    "plain_language": "Skipping a court date after being summoned has real consequences — the case can be decided without you, or a warrant can be issued.",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "practical_fir_next_steps",
+    "source": "General Practice",
+    "section": "What to do after an FIR is filed",
+    "text": "A complainant can track FIR status online in many states, request a copy of the FIR (a legal right), and follow up with the investigating officer; an accused person should generally consult a lawyer promptly, especially before any police interaction.",
+    "plain_language": "After an FIR, you're entitled to a copy of it, and can track its progress. If you're the accused, speak to a lawyer before any further police interaction if possible.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "practical_rent_deposit_dispute",
+    "source": "General Practice",
+    "section": "Security deposit disputes",
+    "text": "Deductions from a security deposit should correspond to actual damage or unpaid dues, documented where possible; unresolved disputes can be raised with local Rent Authorities (where established) or through a civil suit for recovery.",
+    "plain_language": "If a landlord withholds your deposit unfairly, ask for an itemized reason in writing — you may be able to recover it through a Rent Authority or small civil claim.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "practical_property_verification",
+    "source": "General Practice",
+    "section": "Verifying a property before a transaction",
+    "text": "Buyers are generally advised to verify title through the encumbrance certificate, check for pending litigation, confirm proper registration and stamp duty of prior deeds, and verify the seller's identity and authority to sell.",
+    "plain_language": "Before buying or accepting a property, it's worth verifying the seller's ownership, checking for existing loans/disputes on the property, and confirming past documents were properly registered.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "practical_summons_ignore_risk",
+    "source": "General Practice",
+    "section": "Risk of ignoring a summons",
+    "text": "Ignoring any court summons — civil or criminal — generally worsens a person's legal position, since the matter proceeds without their input and the available remedies afterward (like setting aside an ex-parte order) are more limited and time-bound.",
+    "plain_language": "Whatever the case, ignoring a court summons is almost always the worst option — it's far easier to respond early than to undo the consequences later.",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_120A_B",
+    "source": "Indian Penal Code",
+    "section": "120A-120B",
+    "text": "Defines criminal conspiracy (an agreement between two or more people to commit an illegal act) and prescribes its punishment.",
+    "plain_language": "This applies when two or more people plan or agree to commit a crime together, even if the crime itself hasn't fully happened yet.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_141_149",
+    "source": "Indian Penal Code",
+    "section": "141-149",
+    "text": "Defines unlawful assembly and makes every member of an unlawful assembly liable for an offence committed by any member in furtherance of a common object.",
+    "plain_language": "If you're part of a group with an unlawful common purpose, you can be held responsible for what the group does, not just your own individual act.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_268_290",
+    "source": "Indian Penal Code",
+    "section": "268-290",
+    "text": "Covers public nuisance offences, including acts that cause common injury, danger, or annoyance to the public.",
+    "plain_language": "These cover general nuisance-type offences that affect the public, like obstructing a public path or dangerous negligence.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "ipc_425_427",
+    "source": "Indian Penal Code",
+    "section": "425-427",
+    "text": "Defines mischief — causing wrongful loss or damage to property — and prescribes punishment.",
+    "plain_language": "This covers deliberately damaging someone else's property.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "ipc_441_447",
+    "source": "Indian Penal Code",
+    "section": "441-447",
+    "text": "Defines criminal trespass — entering another's property with intent to commit an offence or to intimidate/insult/annoy — and prescribes punishment.",
+    "plain_language": "This applies to entering someone's property unlawfully, especially with an intent to cause trouble.",
+    "doc_types": [
+      "fir",
+      "property_document"
+    ]
+  },
+  {
+    "id": "ipc_120_general",
+    "source": "Indian Penal Code",
+    "section": "34",
+    "text": "Establishes that when a criminal act is done by several people in furtherance of common intention, each is liable as if done alone.",
+    "plain_language": "If a crime is committed by a group acting together with shared intent, each person can be held liable as if they alone did it.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_2f",
+    "source": "Code of Criminal Procedure",
+    "section": "2(c)-2(l)",
+    "text": "Defines 'cognizable' offences (where police can arrest and investigate without prior court approval) versus 'non-cognizable' offences (which need a magistrate's order).",
+    "plain_language": "Whether police can act immediately or need court permission first depends on whether an offence is 'cognizable' or 'non-cognizable'.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_320",
+    "source": "Code of Criminal Procedure",
+    "section": "320",
+    "text": "Lists offences that can be legally compromised/settled between parties (compoundable) with or without court permission.",
+    "plain_language": "Some criminal cases can be legally settled between the parties — but only for specific offences listed as 'compoundable' by law.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_357",
+    "source": "Code of Criminal Procedure",
+    "section": "357",
+    "text": "Empowers courts to order compensation to be paid to victims out of a fine imposed on the convicted person.",
+    "plain_language": "Courts can direct that part of a fine paid by a convicted person go directly to the victim as compensation.",
+    "doc_types": [
+      "court_summons",
+      "fir"
+    ]
+  },
+  {
+    "id": "dv_act_12",
+    "source": "Protection of Women from Domestic Violence Act, 2005",
+    "section": "12",
+    "text": "Allows an aggrieved woman to apply to a magistrate for protection orders, residence orders, and monetary relief in domestic violence situations.",
+    "plain_language": "A woman facing domestic violence can approach a magistrate for protection, the right to stay in the shared home, and financial support — this is a civil remedy, separate from filing a criminal case.",
+    "doc_types": [
+      "fir",
+      "court_summons",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "dv_act_18",
+    "source": "Protection of Women from Domestic Violence Act, 2005",
+    "section": "18",
+    "text": "Allows a magistrate to pass a protection order prohibiting the respondent from committing further acts of domestic violence or contacting the aggrieved person.",
+    "plain_language": "The court can legally order an abuser to stop contact and further harmful acts against the person seeking protection.",
+    "doc_types": [
+      "court_summons",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "contract_act_10",
+    "source": "Indian Contract Act, 1872",
+    "section": "10",
+    "text": "Defines what agreements are contracts: free consent of parties competent to contract, for a lawful consideration and object.",
+    "plain_language": "For an agreement (like a rent agreement or sale) to be a legally binding contract, all parties must agree freely, be legally capable, and the purpose must be lawful.",
+    "doc_types": [
+      "rent_agreement",
+      "property_document",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "contract_act_2h",
+    "source": "Indian Contract Act, 1872",
+    "section": "2(h)",
+    "text": "Defines a contract as an agreement enforceable by law.",
+    "plain_language": "This is the basic legal definition — a contract is simply an agreement that courts will enforce.",
+    "doc_types": [
+      "rent_agreement",
+      "property_document"
+    ]
+  },
+  {
+    "id": "contract_act_10a_consent",
+    "source": "Indian Contract Act, 1872",
+    "section": "13-19",
+    "text": "Defines 'free consent' and voids agreements obtained through coercion, undue influence, fraud, misrepresentation, or mistake.",
+    "plain_language": "A contract signed under pressure, deception, or misunderstanding of key facts may not be legally binding.",
+    "doc_types": [
+      "rent_agreement",
+      "property_document",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "contract_act_37",
+    "source": "Indian Contract Act, 1872",
+    "section": "37",
+    "text": "Requires parties to a contract to either perform or offer to perform their respective promises, unless excused by law.",
+    "plain_language": "Both sides of an agreement are expected to actually do what they promised — this is the basis for most breach-of-contract claims.",
+    "doc_types": [
+      "rent_agreement",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "contract_act_39",
+    "source": "Indian Contract Act, 1872",
+    "section": "39",
+    "text": "Allows a party to treat a contract as ended if the other party refuses to perform or disables themselves from performing their promise.",
+    "plain_language": "If the other side clearly refuses or is unable to keep up their end of the agreement, you may be entitled to treat the contract as over.",
+    "doc_types": [
+      "rent_agreement",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "contract_act_73",
+    "source": "Indian Contract Act, 1872",
+    "section": "73",
+    "text": "Entitles a party who suffers loss from breach of contract to compensation for loss naturally arising from the breach.",
+    "plain_language": "If someone breaks a contract with you and you suffer a loss because of it, you're generally entitled to compensation.",
+    "doc_types": [
+      "legal_notice",
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "contract_act_124_deposit",
+    "source": "Indian Contract Act, 1872",
+    "section": "148-150 (Bailment)",
+    "text": "Governs bailment — where property (like a security deposit or goods) is handed over for a purpose and must be returned or accounted for.",
+    "plain_language": "Rules around handing over property for safekeeping (relevant to how security deposits and goods left with someone should be handled) come from this part of the Act.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "contract_act_198_agency",
+    "source": "Indian Contract Act, 1872",
+    "section": "182-186 (Agency)",
+    "text": "Governs relationships where one person (agent) acts on behalf of another (principal), including property/rental agents.",
+    "plain_language": "If a property agent or manager acts on a landlord's or owner's behalf, this is the legal framework governing that relationship and its limits.",
+    "doc_types": [
+      "rent_agreement",
+      "property_document"
+    ]
+  },
+  {
+    "id": "evidence_act_3",
+    "source": "Indian Evidence Act, 1872",
+    "section": "3",
+    "text": "Defines 'evidence' as including oral statements and documents produced for the court's inspection.",
+    "plain_language": "This defines what legally counts as 'evidence' in a case — both spoken testimony and physical/written documents.",
+    "doc_types": [
+      "court_summons",
+      "fir"
+    ]
+  },
+  {
+    "id": "evidence_act_17_21",
+    "source": "Indian Evidence Act, 1872",
+    "section": "17-21",
+    "text": "Defines 'admissions' — statements suggesting an inference about a fact in issue, made by a party to the proceeding.",
+    "plain_language": "Something you say or write that suggests a fact relevant to the case can later be used against you in court — worth being careful.",
+    "doc_types": [
+      "fir",
+      "court_summons",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "evidence_act_45",
+    "source": "Indian Evidence Act, 1872",
+    "section": "45",
+    "text": "Allows the opinion of experts (such as on handwriting, fingerprints, or forensic matters) to be relevant evidence.",
+    "plain_language": "Expert opinions — like forensic or handwriting analysis — can be formally used as evidence in a case.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "evidence_act_65B",
+    "source": "Indian Evidence Act, 1872",
+    "section": "65B",
+    "text": "Sets conditions for electronic records (like emails, WhatsApp messages, CCTV) to be admissible as evidence, generally requiring a certificate.",
+    "plain_language": "Digital evidence like messages or CCTV footage needs to meet specific legal conditions — usually a certificate — to be accepted in court.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "evidence_act_101_104",
+    "source": "Indian Evidence Act, 1872",
+    "section": "101-104",
+    "text": "Sets out the burden of proof — generally, the party who asserts a fact must prove it.",
+    "plain_language": "As a rule, whoever is claiming something happened has to prove it — the other side doesn't have to prove a negative.",
+    "doc_types": [
+      "court_summons",
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "evidence_act_114",
+    "source": "Indian Evidence Act, 1872",
+    "section": "114",
+    "text": "Allows the court to presume the existence of certain facts based on common course of natural events, human conduct, and public/private business.",
+    "plain_language": "Courts can draw reasonable, common-sense inferences from the facts and normal conduct, even without direct proof of every detail.",
+    "doc_types": [
+      "court_summons",
+      "fir"
+    ]
+  },
+  {
+    "id": "hsa_6",
+    "source": "Hindu Succession Act, 1956",
+    "section": "6",
+    "text": "Gives daughters equal coparcenary rights in ancestral Hindu Undivided Family property, on par with sons.",
+    "plain_language": "Daughters have an equal legal right to ancestral family property, the same as sons — this was a major reform to older custom.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "hsa_8",
+    "source": "Hindu Succession Act, 1956",
+    "section": "8",
+    "text": "Sets out the order of succession for a Hindu male dying intestate (without a will), starting with Class I heirs (spouse, children, mother).",
+    "plain_language": "If a Hindu man dies without a will, the law specifies who inherits first — generally spouse, children, and mother.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "hsa_15",
+    "source": "Hindu Succession Act, 1956",
+    "section": "15",
+    "text": "Sets out the order of succession for a Hindu female dying intestate, generally favoring her own children and husband first.",
+    "plain_language": "If a Hindu woman dies without a will, her property generally goes first to her children and husband, with a different order than for men.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "succession_will_general",
+    "source": "Indian Succession Act, 1925",
+    "section": "General",
+    "text": "Governs the making and validity of wills for non-Hindu, non-Muslim communities in most respects, and probate procedure generally.",
+    "plain_language": "This is the broader law on making valid wills and the court process (probate) needed to formally establish an inherited estate.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "hindu_succession_will_note",
+    "source": "General Practice",
+    "section": "Wills and property documents",
+    "text": "A registered will, while not compulsory, is strong evidence of authenticity and reduces the risk of disputes among heirs; unregistered wills remain valid but are more easily contested.",
+    "plain_language": "Registering a will isn't legally required, but it makes it much harder for anyone to later dispute that it's genuine.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "easements_act_4",
+    "source": "Indian Easements Act, 1882",
+    "section": "4",
+    "text": "Defines an easement as a right that the owner of one property has over another's property, such as a right of way.",
+    "plain_language": "This covers rights like using a path across a neighbour's land to access your own property — a common source of property disputes.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "easements_act_13",
+    "source": "Indian Easements Act, 1882",
+    "section": "13",
+    "text": "Covers easements of necessity — a right that arises when property cannot be reasonably used without it, such as unavoidable access through another's land.",
+    "plain_language": "If your property genuinely can't be used or accessed without crossing a neighbour's land, the law may recognize an automatic right of way.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "partition_act_general",
+    "source": "Partition Act, 1893",
+    "section": "General",
+    "text": "Allows co-owners of property to seek partition (division) through court, or a sale with proceeds divided, when physical division isn't practical.",
+    "plain_language": "Co-owners of a property (like siblings inheriting jointly) can go to court to formally divide it, or sell it and split the proceeds if dividing isn't practical.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "it_act_43",
+    "source": "Information Technology Act, 2000",
+    "section": "43",
+    "text": "Makes a person liable for compensation for unauthorized access, damage, or data theft from a computer system without the owner's permission.",
+    "plain_language": "Unauthorized access to someone's computer, phone, or data — even without direct financial loss — can lead to a compensation claim.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "it_act_66",
+    "source": "Information Technology Act, 2000",
+    "section": "66",
+    "text": "Punishes computer-related offences done dishonestly or fraudulently, referencing the conduct described in Section 43.",
+    "plain_language": "This is the criminal counterpart to Section 43 — hacking or unauthorized digital access done with dishonest intent.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "it_act_66C",
+    "source": "Information Technology Act, 2000",
+    "section": "66C",
+    "text": "Punishes identity theft — fraudulently using another person's electronic signature, password, or other unique identification.",
+    "plain_language": "This covers online identity theft, like someone fraudulently using your digital identity or login credentials.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "it_act_66D",
+    "source": "Information Technology Act, 2000",
+    "section": "66D",
+    "text": "Punishes cheating by personation using a computer resource, such as online impersonation scams.",
+    "plain_language": "This applies to online fraud where someone impersonates another person or entity to cheat you, like fake profiles or phishing.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "it_act_66E",
+    "source": "Information Technology Act, 2000",
+    "section": "66E",
+    "text": "Punishes violation of privacy — capturing, publishing, or transmitting images of a person's private area without consent.",
+    "plain_language": "This covers non-consensual capturing or sharing of private images — a common basis for harassment-related FIRs.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "it_act_67",
+    "source": "Information Technology Act, 2000",
+    "section": "67",
+    "text": "Punishes publishing or transmitting obscene material in electronic form.",
+    "plain_language": "This is the main section used for sharing obscene content online without consent.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "mva_134",
+    "source": "Motor Vehicles Act, 1988",
+    "section": "134",
+    "text": "Requires the driver of a vehicle involved in an accident to stop, provide assistance, and report the accident to police.",
+    "plain_language": "After a road accident, the driver is legally required to stop, help if possible, and report it — leaving the scene can itself be an offence.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "mva_166",
+    "source": "Motor Vehicles Act, 1988",
+    "section": "166",
+    "text": "Allows victims (or their legal representatives) of a motor accident to claim compensation before a Motor Accident Claims Tribunal.",
+    "plain_language": "Accident victims (or their families) can claim compensation through a dedicated Tribunal, separate from any criminal case.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "mva_185",
+    "source": "Motor Vehicles Act, 1988",
+    "section": "185",
+    "text": "Punishes driving under the influence of alcohol or drugs beyond the prescribed limit.",
+    "plain_language": "Drunk or drugged driving is a specific punishable offence under this Act, often relevant in accident-related FIRs.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "mta_2",
+    "source": "Model Tenancy Act, 2021",
+    "section": "2 (Definitions)",
+    "text": "Defines key terms including 'landlord', 'tenant', 'premises', and 'Rent Authority' as used throughout the Act.",
+    "plain_language": "This sets the basic vocabulary — who counts as a landlord vs tenant, and what a 'Rent Authority' is under the model law.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "mta_12",
+    "source": "Model Tenancy Act, 2021",
+    "section": "12",
+    "text": "Requires the landlord to maintain the structure and essential supplies (like water and electricity connections) of the rented premises.",
+    "plain_language": "Landlords are generally responsible for keeping the property's core structure and essential utilities in working order.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "mta_13",
+    "source": "Model Tenancy Act, 2021",
+    "section": "13",
+    "text": "Requires the tenant to maintain the premises and not make structural changes without the landlord's written consent.",
+    "plain_language": "Tenants are expected to take reasonable care of the property and get written permission before making structural changes.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "mta_15",
+    "source": "Model Tenancy Act, 2021",
+    "section": "15",
+    "text": "Prohibits a landlord from cutting off essential supplies (water, electricity) to force a tenant out, regardless of any dispute.",
+    "plain_language": "A landlord cannot legally cut off water or electricity to pressure a tenant to leave, even during a dispute — this is specifically prohibited.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "mta_25",
+    "source": "Model Tenancy Act, 2021",
+    "section": "25",
+    "text": "Establishes Rent Courts and Rent Tribunals as dedicated forums to resolve tenancy disputes faster than regular civil courts.",
+    "plain_language": "Tenancy disputes are meant to go through dedicated Rent Courts/Tribunals rather than the regular, often slower, civil court system.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "mta_31",
+    "source": "Model Tenancy Act, 2021",
+    "section": "31",
+    "text": "Bars landlords from increasing rent during the tenancy period except as specified in the written agreement.",
+    "plain_language": "A landlord generally can't raise rent mid-agreement unless the agreement itself allows for it — the terms should be fixed at signing.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "rti_act_6",
+    "source": "Right to Information Act, 2005",
+    "section": "6",
+    "text": "Allows any citizen to request information from a public authority by filing a simple written application.",
+    "plain_language": "Any citizen can formally request information from a government office — useful for tracking a case, an FIR copy, or a land record.",
+    "doc_types": [
+      "fir",
+      "property_document"
+    ]
+  },
+  {
+    "id": "rti_act_7",
+    "source": "Right to Information Act, 2005",
+    "section": "7",
+    "text": "Requires a public authority to respond to an RTI request within 30 days, or 48 hours if it concerns life or liberty.",
+    "plain_language": "Government offices must respond to an RTI request within 30 days — much faster (48 hours) if it's about someone's life or liberty.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "arb_act_7",
+    "source": "Arbitration and Conciliation Act, 1996",
+    "section": "7",
+    "text": "Defines an arbitration agreement as one where parties agree to submit disputes to arbitration instead of regular courts.",
+    "plain_language": "If your rent or property agreement has an arbitration clause, disputes may need to go to a private arbitrator instead of a regular court.",
+    "doc_types": [
+      "rent_agreement",
+      "property_document",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "legal_services_act_mediation",
+    "source": "Legal Services Authorities Act, 1987",
+    "section": "Lok Adalat provisions",
+    "text": "Enables disputes to be settled through Lok Adalats — informal forums offering quicker, mutually agreed resolutions with the same legal force as a court decree.",
+    "plain_language": "Lok Adalats offer a faster, informal way to settle disputes by agreement — the outcome has the same legal force as a regular court order.",
+    "doc_types": [
+      "legal_notice",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "sra_10",
+    "source": "Specific Relief Act, 1963",
+    "section": "10",
+    "text": "Allows a court to order specific performance of a contract (actually completing the deal), rather than just awarding compensation, in appropriate cases.",
+    "plain_language": "In some cases — especially property deals — a court can order the other party to actually go through with the agreement, not just pay damages.",
+    "doc_types": [
+      "property_document",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "sra_6",
+    "source": "Specific Relief Act, 1963",
+    "section": "6",
+    "text": "Allows a person dispossessed of immovable property without their consent (other than by due process of law) to recover possession through a summary suit.",
+    "plain_language": "If someone is illegally thrown out of their property without following legal process, there's a fast-track court remedy to get possession back.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "sra_38",
+    "source": "Specific Relief Act, 1963",
+    "section": "38",
+    "text": "Allows a court to grant a perpetual injunction to prevent the breach of an obligation, such as stopping interference with property rights.",
+    "plain_language": "Courts can permanently order someone to stop a specific harmful action, such as trespassing or interfering with your property.",
+    "doc_types": [
+      "property_document",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "dowry_act_3",
+    "source": "Dowry Prohibition Act, 1961",
+    "section": "3",
+    "text": "Punishes giving or taking dowry, with enhanced penalties compared to earlier versions of the law.",
+    "plain_language": "Both giving and demanding dowry are punishable offences under this Act, not just harassment linked to it.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "dowry_act_4",
+    "source": "Dowry Prohibition Act, 1961",
+    "section": "4",
+    "text": "Punishes demanding dowry, directly or indirectly, from the bride's family.",
+    "plain_language": "Even a demand for dowry — without it actually being given — is separately punishable under this section.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "dowry_act_6",
+    "source": "Dowry Prohibition Act, 1961",
+    "section": "6",
+    "text": "Requires any dowry received to be held in trust for the woman's benefit and transferred to her within a set period.",
+    "plain_language": "Legally, any dowry given is supposed to be held for the wife's own benefit, not kept by the husband's family.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "crpc_125",
+    "source": "Code of Criminal Procedure",
+    "section": "125",
+    "text": "Allows a wife, children, or parents unable to maintain themselves to claim monthly maintenance from a person with sufficient means.",
+    "plain_language": "A spouse, child, or parent who can't support themselves can legally claim monthly maintenance from a family member who can afford to pay.",
+    "doc_types": [
+      "court_summons",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "maintenance_parents_act_4",
+    "source": "Maintenance and Welfare of Parents and Senior Citizens Act, 2007",
+    "section": "4",
+    "text": "Allows senior citizens or parents unable to maintain themselves to claim maintenance from their children or relatives.",
+    "plain_language": "Elderly parents who cannot support themselves have a legal right to claim maintenance from their children, enforceable through a tribunal.",
+    "doc_types": [
+      "court_summons",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "hindu_marriage_act_24",
+    "source": "Hindu Marriage Act, 1955",
+    "section": "24",
+    "text": "Allows either spouse to claim interim maintenance and litigation expenses during the pendency of matrimonial proceedings.",
+    "plain_language": "During an ongoing divorce or matrimonial case, either spouse can ask the court for temporary financial support to cover living and legal costs.",
+    "doc_types": [
+      "court_summons",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "hindu_marriage_act_13",
+    "source": "Hindu Marriage Act, 1955",
+    "section": "13",
+    "text": "Lists the grounds on which either spouse can seek divorce, including cruelty, desertion, and adultery.",
+    "plain_language": "This section lists valid legal reasons a spouse can cite to seek a divorce.",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "partnership_act_25",
+    "source": "Indian Partnership Act, 1932",
+    "section": "25",
+    "text": "Makes every partner jointly and severally liable for all acts of the firm done while they were a partner.",
+    "plain_language": "In a business partnership, each partner can be held personally liable for the firm's obligations — not just the partner directly involved.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "sale_goods_act_31",
+    "source": "Sale of Goods Act, 1930",
+    "section": "31",
+    "text": "Requires the seller to deliver goods and the buyer to accept and pay for them, in accordance with the contract.",
+    "plain_language": "In a goods transaction, both sides have basic legal obligations — the seller to deliver, and the buyer to accept and pay as agreed.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "sale_goods_act_16",
+    "source": "Sale of Goods Act, 1930",
+    "section": "16",
+    "text": "Implies conditions of merchantable quality and fitness for purpose in a sale, subject to certain exceptions.",
+    "plain_language": "Goods sold are generally expected to be of reasonable quality and fit for their intended use, even without it being written into the contract.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "ipc_359_363",
+    "source": "Indian Penal Code",
+    "section": "359-363",
+    "text": "Defines kidnapping (from India or from lawful guardianship) and prescribes punishment.",
+    "plain_language": "These sections cover kidnapping, including taking a minor away from a lawful guardian without consent.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "ipc_489A_489D",
+    "source": "Indian Penal Code",
+    "section": "489A-489D",
+    "text": "Punishes counterfeiting, possessing, or using counterfeit currency notes or government stamps.",
+    "plain_language": "These cover fake currency offences — making, possessing, or using counterfeit money or government stamps.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "ipc_191_193",
+    "source": "Indian Penal Code",
+    "section": "191-193",
+    "text": "Defines and punishes giving false evidence, including fabricating false evidence for use in a judicial proceeding.",
+    "plain_language": "Deliberately lying under oath or fabricating evidence in a court case is itself a separate criminal offence.",
+    "doc_types": [
+      "court_summons",
+      "fir"
+    ]
+  },
+  {
+    "id": "ipc_182",
+    "source": "Indian Penal Code",
+    "section": "182",
+    "text": "Punishes giving false information to a public servant with intent to cause them to act to another's injury.",
+    "plain_language": "Filing a knowingly false complaint or report with police or another authority is itself a punishable offence.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "ipc_211",
+    "source": "Indian Penal Code",
+    "section": "211",
+    "text": "Punishes falsely charging a person with an offence, knowing there is no just or lawful ground for the charge.",
+    "plain_language": "Filing a false criminal complaint against someone, knowing it has no basis, is itself punishable under this section.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "crpc_482",
+    "source": "Code of Criminal Procedure",
+    "section": "482",
+    "text": "Preserves the High Court's inherent powers to prevent abuse of court process or to secure the ends of justice, including quashing an FIR.",
+    "plain_language": "In genuinely baseless or malicious cases, the High Court has the power to quash an FIR or criminal proceeding entirely under this section.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_207",
+    "source": "Code of Criminal Procedure",
+    "section": "207",
+    "text": "Requires the magistrate to furnish the accused with copies of the police report, FIR, and other key documents free of cost.",
+    "plain_language": "An accused person is legally entitled to receive free copies of the FIR, police report, and other key case documents.",
+    "doc_types": [
+      "court_summons",
+      "fir"
+    ]
+  },
+  {
+    "id": "practical_maintenance_note",
+    "source": "General Practice",
+    "section": "Filing for maintenance",
+    "text": "A maintenance claim under CrPC 125 or the Hindu Marriage Act typically requires proof of relationship, the claimant's inability to maintain themselves, and the respondent's income/means — documentation of income and expenses strengthens the case.",
+    "plain_language": "To claim maintenance, it helps to gather proof of the relationship, your own expenses, and the other person's income — courts rely heavily on this documentation.",
+    "doc_types": [
+      "court_summons",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "practical_property_dispute_note",
+    "source": "General Practice",
+    "section": "Resolving co-ownership disputes",
+    "text": "Co-owners facing a stalemate can attempt mutual settlement, mediation, or approach a civil court for partition; maintaining clear records of contributions and possession strengthens any eventual claim.",
+    "plain_language": "If co-owners of a property (like family members) can't agree, courts can formally divide the property — keeping clear records of who paid for and used what helps your case.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "practical_notice_period_note",
+    "source": "General Practice",
+    "section": "Notice periods in tenancy",
+    "text": "Where a rent agreement is silent, default statutory notice periods apply (commonly 15 days to 1 month for monthly tenancies); the agreement's own terms generally override the default if more specific.",
+    "plain_language": "If your rent agreement doesn't specify a notice period, a default legal minimum applies — but check the agreement first, since its own terms usually take priority.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "practical_consumer_complaint_note",
+    "source": "General Practice",
+    "section": "Filing a consumer complaint",
+    "text": "A consumer complaint should ideally include proof of purchase, communication with the seller/service provider, and a clear statement of the deficiency or unfair practice alleged.",
+    "plain_language": "When filing a consumer complaint, keep your purchase receipt, any messages with the seller, and a clear written account of what went wrong.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "practical_settlement_note",
+    "source": "General Practice",
+    "section": "Out-of-court settlement",
+    "text": "Parties can settle a dispute at any stage before final judgment through direct negotiation, mediation, or a Lok Adalat, and a written settlement agreement can be made legally enforceable.",
+    "plain_language": "Most disputes can be settled outside court at any point — through direct talks, mediation, or a Lok Adalat — and a written settlement can be made legally binding.",
+    "doc_types": [
+      "legal_notice",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "practical_document_safekeeping",
+    "source": "General Practice",
+    "section": "Preserving legal documents",
+    "text": "Originals of registered documents, FIR copies, and court orders should be preserved carefully; certified copies can usually be obtained from the relevant registry, police station, or court record room if originals are lost.",
+    "plain_language": "Keep original legal documents safe, but know that certified copies can usually be obtained again from the relevant office if something is lost.",
+    "doc_types": [
+      "property_document",
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "tpa_53A",
+    "source": "Transfer of Property Act, 1882",
+    "section": "53A",
+    "text": "Protects a buyer in possession under an unregistered contract of sale (having paid consideration and performed their part) from eviction by the seller, though it doesn't transfer ownership itself.",
+    "plain_language": "If you've paid for and taken possession of a property under a valid but unregistered sale agreement, this can protect you from being evicted by the seller, even though you may not be the full legal owner yet.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "tpa_footnote_mortgage_types",
+    "source": "Transfer of Property Act, 1882",
+    "section": "58(b)-(f) (Mortgage types)",
+    "text": "Distinguishes types of mortgages including simple mortgage, mortgage by conditional sale, usufructuary mortgage, and equitable mortgage by deposit of title deeds.",
+    "plain_language": "There are several legal types of mortgage, each with different rights and remedies — the type used affects what happens if a loan isn't repaid.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "reg_act_32",
+    "source": "Registration Act, 1908",
+    "section": "32-35",
+    "text": "Requires the executant (or their authorised agent) to appear before the Sub-Registrar to admit execution of a document for registration.",
+    "plain_language": "The person signing a property document generally has to personally appear (or send an authorised agent) before the Sub-Registrar's office to complete registration.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "stamp_act_47A",
+    "source": "Indian Stamp Act, 1899",
+    "section": "47A",
+    "text": "Empowers the registering officer to refer an instrument for valuation if the stated property value appears understated, to prevent stamp duty evasion.",
+    "plain_language": "If a property's declared value looks too low, the registration office can independently verify it — this is meant to prevent underpaying stamp duty.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "mta_9",
+    "source": "Model Tenancy Act, 2021",
+    "section": "9",
+    "text": "Requires the landlord to return the security deposit within one month of the tenant vacating, after deducting any lawful dues.",
+    "plain_language": "A landlord is expected to return your security deposit within a month of you vacating, minus any genuine deductions — not hold onto it indefinitely.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "mta_16",
+    "source": "Model Tenancy Act, 2021",
+    "section": "16",
+    "text": "Requires the tenant to pay rent within the time agreed, and specifies that non-payment for a defined period is a ground for eviction proceedings.",
+    "plain_language": "Tenants are expected to pay rent on time as per the agreement — repeated non-payment is one of the standard grounds a landlord can use to seek eviction.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "mta_28",
+    "source": "Model Tenancy Act, 2021",
+    "section": "28",
+    "text": "Requires eviction applications to be filed with the Rent Court, rather than landlords taking unilateral action like forcible eviction.",
+    "plain_language": "A landlord cannot forcibly evict a tenant themselves — even with valid grounds, eviction must go through the proper Rent Court process.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "practical_illegal_eviction",
+    "source": "General Practice",
+    "section": "Illegal/forcible eviction",
+    "text": "A tenant who is locked out or forcibly evicted without following due legal process can seek an urgent court order for restoration of possession, regardless of whether rent was due.",
+    "plain_language": "If a landlord locks you out or forcibly evicts you without going through proper legal process, you can seek an urgent court order to get back into the property — even if rent was pending.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "practical_rent_receipt",
+    "source": "General Practice",
+    "section": "Keeping rent receipts",
+    "text": "Tenants should retain rent payment receipts or bank transfer records, since these serve as primary proof of tenancy and timely payment in any future dispute.",
+    "plain_language": "Always keep your rent receipts or payment records — they're your main proof of tenancy and on-time payment if a dispute ever arises.",
+    "doc_types": [
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "practical_pod_conveyance",
+    "source": "General Practice",
+    "section": "Power of Attorney property deals",
+    "text": "A sale based solely on a General Power of Attorney (GPA), without a proper registered sale deed, generally does not transfer full legal ownership and carries higher risk.",
+    "plain_language": "Be cautious of property deals done only through a General Power of Attorney — courts have held that this alone doesn't transfer full legal ownership; a proper registered sale deed is what matters.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "practical_encumbrance_certificate",
+    "source": "General Practice",
+    "section": "Encumbrance certificates",
+    "text": "An Encumbrance Certificate, obtainable from the Sub-Registrar's office, shows all registered transactions on a property over a chosen period and helps confirm it's free of existing loans or claims.",
+    "plain_language": "An Encumbrance Certificate from the local registrar's office shows the property's transaction history — it's the standard way to check it's free of existing loans or disputes before buying.",
+    "doc_types": [
+      "property_document"
+    ]
+  },
+  {
+    "id": "ipc_405_definition",
+    "source": "Indian Penal Code",
+    "section": "405",
+    "text": "Defines criminal breach of trust as dishonest misappropriation or conversion of entrusted property, or violation of a legal contract regarding its disposal.",
+    "plain_language": "This defines exactly what counts as 'breach of trust' — misusing property that was legally entrusted to you for a specific purpose.",
+    "doc_types": [
+      "fir",
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "ipc_120b_conspiracy_note",
+    "source": "General Practice",
+    "section": "Multiple accused in one FIR",
+    "text": "When an FIR names multiple accused, each person's specific role and evidence is generally examined individually, even where a common charge like conspiracy is alleged.",
+    "plain_language": "If several people are named in one FIR, the evidence against each person is still looked at individually — being named doesn't automatically mean equal guilt.",
+    "doc_types": [
+      "fir"
+    ]
+  },
+  {
+    "id": "crpc_bail_conditions",
+    "source": "Code of Criminal Procedure",
+    "section": "437(3)",
+    "text": "Allows courts to impose conditions on bail, such as reporting to police, surrendering a passport, or not contacting witnesses.",
+    "plain_language": "Bail often comes with conditions — like regularly reporting to police or not contacting certain people — breaking these can lead to bail being cancelled.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "crpc_cancellation_bail",
+    "source": "Code of Criminal Procedure",
+    "section": "439(2)",
+    "text": "Allows a court to cancel bail already granted, if the accused violates bail conditions or interferes with the case.",
+    "plain_language": "Bail isn't necessarily final — a court can cancel it later if the accused breaks the conditions or tries to interfere with the case.",
+    "doc_types": [
+      "fir",
+      "court_summons"
+    ]
+  },
+  {
+    "id": "legal_notice_reply_timing",
+    "source": "General Practice",
+    "section": "Timing a legal notice reply",
+    "text": "While the law rarely fixes a strict reply deadline for a general legal notice (unlike the 15-day cheque-bounce notice), prompt written response is generally advisable to avoid an adverse inference of acceptance or default.",
+    "plain_language": "Most legal notices don't have a strict legal deadline to reply, but responding promptly in writing is wise — silence can sometimes be read against you later.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "legal_notice_drafting_note",
+    "source": "General Practice",
+    "section": "What a legal notice typically contains",
+    "text": "A legal notice typically states the facts of the dispute, the specific relief or compliance demanded, and a reasonable time period to comply before further legal action is threatened.",
+    "plain_language": "A proper legal notice usually lays out what happened, exactly what the sender wants you to do, and a deadline before they take further legal steps.",
+    "doc_types": [
+      "legal_notice"
+    ]
+  },
+  {
+    "id": "court_summons_types_note",
+    "source": "General Practice",
+    "section": "Types of court summons",
+    "text": "A summons may be issued in a civil suit (to answer a claim), a criminal case (to appear as accused or witness), or in family/matrimonial proceedings — each carries different procedural consequences for non-appearance.",
+    "plain_language": "Not all court summonses are the same — a civil case summons, a criminal case summons, and a family court summons each carry different stakes if ignored, so it helps to know which kind you've received.",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "practical_witness_summons",
+    "source": "General Practice",
+    "section": "Being summoned as a witness",
+    "text": "A person summoned as a witness (not an accused) is legally obligated to appear and testify truthfully, but is not personally at legal risk merely for being called as a witness.",
+    "plain_language": "If you're summoned as a witness rather than an accused, you're required to appear and tell the truth, but you are not personally on trial.",
+    "doc_types": [
+      "court_summons"
+    ]
+  },
+  {
+    "id": "practical_translation_disclaimer",
+    "source": "General Practice",
+    "section": "Understanding a document in your own language",
+    "text": "Court and government documents are generally issued in English or the relevant state's official language; a plain-language explanation in one's own language helps understanding but does not replace the legal force of the original document.",
+    "plain_language": "A simplified explanation in your own language is meant to help you understand the document — but the original document itself remains the legally binding version.",
+    "doc_types": [
+      "fir",
+      "court_summons",
+      "legal_notice",
+      "property_document",
+      "rent_agreement"
+    ]
+  },
+  {
+    "id": "practical_lawyer_vs_legal_aid",
+    "source": "General Practice",
+    "section": "Choosing between a private lawyer and legal aid",
+    "text": "Free legal aid through District Legal Services Authorities is available to eligible categories of people, while private lawyers offer more choice of representation at a cost; both are valid options depending on urgency, complexity, and eligibility.",
+    "plain_language": "You can choose between free legal aid (if you're eligible) and a private lawyer — free legal aid is a genuine, credible option, not just a fallback for cases lacking money.",
+    "doc_types": [
+      "fir",
+      "court_summons",
+      "legal_notice",
+      "property_document",
+      "rent_agreement"
+    ]
+  }
+]
