@@ -383,26 +383,6 @@ The GitHub Actions workflow is stored in `ci/github-actions.yml`. Enable it by c
 
 ---
 
-## ⚠️ Known limitations
-
-- OCR quality depends on photo clarity; well-lit, straight, full-page photos work best.
-- The first OCR request can be slow if the optional EasyOCR fallback downloads models.
-- The analysis prompt currently uses the first ~12,000 characters of the extracted text.
-- Chat answers use the same configured LLM and the current legal corpus; a larger corpus will improve them.
-- The BNS/BNSS/BSA entries are a starter mapping (21 entries) and need review by a lawyer; the corpus is not yet comprehensive.
-- The evaluation dataset is small and synthetic; expand it with anonymised real documents and lawyer-reviewed labels.
-- Tamil OCR still needs Tesseract for reliable results.
-- Voice input needs a microphone; on phones this requires the HTTPS Gradio share link, or upload a voice note.
-- Whisper accuracy drops with background noise, strong accents, or very quiet recordings.
-- The first voice request downloads the Whisper model (`small` is about 500 MB).
-- Local LLM inference (3B/8B) can be slow on CPU, especially the first request.
-- gTTS requires an internet connection.
-- Very small local models may need the field-by-field localization fallback; 8B-quality models produce more polished regional-language text.
-- Tamil/Telugu TTS quality is good but not perfect for complex legal terms.
-- This is general legal information, **not legal advice**.
-
----
-
 ## 🔐 Privacy and data handling
 
 - Uploaded PDFs/images are deleted immediately after text extraction.
