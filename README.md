@@ -192,12 +192,16 @@ Open **http://localhost:7860**.
 
 ## ☁️ Deploy to Hugging Face Spaces
 
-A free CPU Space cannot run Ollama, so the Space uses Groq for the LLM. The
-README front matter above is already configured for the Gradio SDK.
+Hugging Face now requires a paid plan to create Gradio Spaces on **CPU
+basic**, but free personal accounts can host up to **2 Gradio Spaces on
+ZeroGPU**. This project is configured for that free ZeroGPU tier: the LLM
+runs on Groq, while OCR and TTS run on CPU. The Linux requirements pin
+`torch==2.8.0`, which is a ZeroGPU-supported version.
 
 1. Create a Space at [huggingface.co/new-space](https://huggingface.co/new-space):
    - SDK: **Gradio**
-   - Hardware: **CPU basic**
+   - Hardware: **ZeroGPU (free tier)**
+   - Template: **Blank**
 2. Push this project to the Space repository, keeping:
    - `README.md` (with its YAML front matter)
    - `app.py`
@@ -216,9 +220,11 @@ README front matter above is already configured for the Gradio SDK.
 
 Notes:
 
-- `ocrmac` is macOS-only, so on the Space the OCR path uses Tesseract and
-  EasyOCR instead.
-- Free CPU is slower than a local machine; the first voice request also
+- ZeroGPU is free with quotas for personal accounts. The app does not use
+  the GPU directly; it is simply the available free Gradio hardware.
+- `ocrmac` is macOS-only, so on the Space the OCR path uses Tesseract (and
+  EasyOCR only if you install the optional fallback).
+- Free hardware is slower than a local machine; the first voice request also
   downloads the Whisper model.
 - For the full local-Ollama version, deploy a Docker container on a VM,
   Render, Railway, or Fly.io instead.
